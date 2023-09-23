@@ -1,0 +1,36 @@
+{
+  "name": "pctx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Morglod/pctx.git"
+  },
+  "keywords": [
+    "react",
+    "context",
+    "react-context",
+    "useContext",
+    "partial context",
+    "hooks",
+    "typescript"
+  ],
+  "author": "morglod",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.2.24",
+    "@types/react-dom": "^18.2.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Morglod/pctx/issues"
+  },
+  "homepage": "https://github.com/Morglod/pctx#readme"
+}
