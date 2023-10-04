@@ -1,6 +1,6 @@
 {
   "name": "use-partial-context",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Use only part of context, preventing unnecessary updates",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

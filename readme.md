@@ -1,3 +1,7 @@
+[![NPM Version](https://badge.fury.io/js/use-partial-context.svg?style=flat)](https://www.npmjs.com/package/use-partial-context)
+[![GitHub stars](https://img.shields.io/github/stars/Morglod/use-partial-context.svg?style=social&label=Star&maxAge=2592000)](https://gitHub.com/Morglod/use-partial-context/)
+[![GitHub stars](https://img.shields.io/bundlephobia/minzip/use-partial-context)](https://gitHub.com/Morglod/use-partial-context/)
+
 # usePartialContext
 
 React hook that provides ability to use only part of context, preventing unnecessary updates.
