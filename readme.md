@@ -23,16 +23,16 @@ npm i use-partial-context
 ```jsx
 const Context = createPartialContext();
 
-const Row = memo(({ rowIndex }) {
-    const value = Context.usePartialContext(row => row.smth);
+const Row = memo(() => {
+    const value = Context.usePartialContext(data => data.smth);
 
     // component will be updated ONLY if value changes
     return <div>{value}</div>;
 });
 
 function MyApp() {
-    const store = useState(createData);
-    return <Context.Provider value={rows}>{/** render rows */}</Ctx.Provider>;
+    const store = useState(...);
+    return <Context.Provider value={store}>{/** render rows */}</Ctx.Provider>;
 }
 ```
 
