@@ -18,25 +18,68 @@ npm i use-partial-context
 
 [demo](https://morglod.github.io/use-partial-context/examples/example.html)
 
-## Example
+## Usage
 
 ```jsx
 const Context = createPartialContext();
 
 const Row = memo(({ rowIndex }) {
-    const value = Context.usePartialContext(row => ({
-        x: row.foo,
-        y: row.boo
-    }));
+    const value = Context.usePartialContext(row => row.smth);
 
-    // component will be updated ONLY for changed x/y
-    return <div>{value.x} {value.y}</div>;
+    // component will be updated ONLY if value changes
+    return <div>{value}</div>;
 });
 
 function MyApp() {
     const store = useState(createData);
     return <Context.Provider value={rows}>{/** render rows */}</Ctx.Provider>;
 }
+```
+
+## Examples
+
+Results are memoized by fields, not just by reference:
+
+```jsx
+const value = Context.usePartialContext((row) => ({
+    x: row.foo,
+    y: row.boo,
+}));
+```
+
+Pass deps of your getter function to force update:
+
+```jsx
+const [counter] = useState();
+const value = Context.usePartialContext(
+    (data) => data.smth + counter,
+    [counter]
+);
+```
+
+Pass custom comparison function for memoization (by default is good btw):
+
+```jsx
+const value = Context.usePartialContext(
+    getter,
+    deps,
+    (nextValue, prevValue) => nextValue === prevValue
+);
+```
+
+Decide when to update based on prev result:
+
+```jsx
+const value = Context.usePartialContext((ctxData, prevResult) => {
+    // no updates, everything is ok
+    if (prevResult.status === "ok") return prevResult;
+
+    // waiting
+    if (ctxData.loading) return { status: "not ok" };
+
+    // loaded, pick data
+    return { status: "ok", data: ctxData.data.smth };
+});
 ```
 
 ## Api
