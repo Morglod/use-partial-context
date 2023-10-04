@@ -11,3 +11,6 @@ lib/example.*
 ./.gitignore
 ./README.md
 docs
+examples
+package-lock.json
+LICENSE

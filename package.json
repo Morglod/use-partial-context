@@ -1,16 +1,16 @@
 {
-  "name": "pctx",
+  "name": "use-partial-context",
   "version": "1.0.0",
-  "description": "",
+  "description": "Use only part of context, preventing unnecessary updates",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc && browserify ./lib/example.js -o ./examples/example.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Morglod/pctx.git"
+    "url": "git+https://github.com/Morglod/use-partial-context.git"
   },
   "keywords": [
     "react",
@@ -26,11 +26,16 @@
   "devDependencies": {
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
+    "browserify": "^17.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "use-context-selector": "^1.4.1"
+  },
+  "peerDependencies": {
+    "react": "^17"
   },
   "bugs": {
-    "url": "https://github.com/Morglod/pctx/issues"
+    "url": "https://github.com/Morglod/use-partial-context/issues"
   },
-  "homepage": "https://github.com/Morglod/pctx#readme"
+  "homepage": "https://github.com/Morglod/use-partial-context#readme"
 }

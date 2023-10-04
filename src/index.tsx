@@ -61,13 +61,38 @@ export function createPartialContext<T>() {
         return data;
     }
 
-    function usePartialContext<R>(getter: (data: T, prevValue?: R) => R, deps: any[], isEqual: (next: R, prev: R) => boolean = defaultIsEqual): R {
+    function usePartialContext<R>(
+        getter: (data: T, prevValue?: R) => R,
+        deps: any[] = [],
+        isEqual: (next: R, prev: R) => boolean = defaultIsEqual
+    ): R {
         const ref = useContextReact(Ctx);
-        const [data, setData] = useState(() => getter(ref.current.data));
+        const prevCtxData = useRef<T>(ref.current.data);
+        let [data, setData] = useState<R>(() => getter(ref.current.data));
+
+        // handle components rerender & new props
+        if (ref.current.data !== prevCtxData.current) {
+            prevCtxData.current = ref.current.data;
+            const nextData = getter(ref.current.data);
+            if (!isEqual(nextData, data)) {
+                data = nextData;
+            }
+        }
 
         useEffect(() => {
+            // handle deps change & first effect call without deps change
+            if (ref.current.data !== prevCtxData.current) {
+                prevCtxData.current = ref.current.data;
+                const nextData = getter(ref.current.data);
+                if (!isEqual(nextData, data)) {
+                    setData(nextData);
+                }
+            }
+
+            // handle context change
             const handler = () => {
                 setData(prevData => {
+                    prevCtxData.current = ref.current.data;
                     const nextData = getter(ref.current.data, prevData);
                     if (isEqual(nextData, prevData)) return prevData;
                     return nextData;
@@ -77,7 +102,7 @@ export function createPartialContext<T>() {
             return () => {
                 ref.current.subscribers = ref.current.subscribers.filter(x => x !== handler);
             };
-        }, [ref, ...deps]);
+        }, deps);
 
         return data;
     }
@@ -97,10 +122,11 @@ export function createPartialContext<T>() {
     }
 
     return {
+        RealContext: Ctx,
         Provider,
         Consumer,
         PartialConsumer,
         useContext,
-        usePartialContext,
+        usePartialContext
     };
 }
