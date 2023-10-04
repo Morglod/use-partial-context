@@ -52,10 +52,7 @@ const Row = (0, react_1.memo)((props) => {
 const ExampleContextSelectorHeavy = (props) => {
     const [state] = props.store;
     return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
-                // you should use multiple useContextSelector for proper work
-                // and there is no other way as it compares by reference
-                const value = useContextSelector(StoreCtx, ([data, setData]) => data[props.index]);
-                const setData = useContextSelector(StoreCtx, ([data, setData]) => setData);
+                Imagine we have something heavy inside selector and we want to decide when to update
             ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] })));
 };
 exports.ExampleContextSelectorHeavy = ExampleContextSelectorHeavy;
@@ -181,7 +178,9 @@ const Row = (0, react_1.memo)((props) => {
 const ExamplePartialContextHeavy = (props) => {
     const [state] = props.store;
     return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
-            // update should be called only when data changes
+                Imagine we have something heavy inside selector and we want to decide when to update
+
+                Because usePartialContext pass previous result, we could decide when to update
             ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] })));
 };
 exports.ExamplePartialContextHeavy = ExamplePartialContextHeavy;
