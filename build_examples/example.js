@@ -24,7 +24,7 @@ const Row = (0, react_1.memo)((props) => {
 });
 const ExampleContextSelectorDeadProps = (props) => {
     const [state] = props.store;
-    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("a", Object.assign({ href: "https://react-redux.js.org/api/hooks#stale-props-and-zombie-children", target: "_blank" }, { children: "stale props" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("pre", { children: "You will see alert if dead prop found" }), (0, jsx_runtime_1.jsx)("hr", {}), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i, value: state[i] }, i)))] })));
+    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("a", { href: "https://react-redux.js.org/api/hooks#stale-props-and-zombie-children", target: "_blank", children: "stale props" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("pre", { children: "You will see alert if dead prop found" }), (0, jsx_runtime_1.jsx)("hr", {}), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i, value: state[i] }, i)))] }));
 };
 exports.ExampleContextSelectorDeadProps = ExampleContextSelectorDeadProps;
 
@@ -51,9 +51,9 @@ const Row = (0, react_1.memo)((props) => {
 });
 const ExampleContextSelectorHeavy = (props) => {
     const [state] = props.store;
-    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
+    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
                 Imagine we have something heavy inside selector and we want to decide when to update
-            ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] })));
+            ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
 };
 exports.ExampleContextSelectorHeavy = ExampleContextSelectorHeavy;
 
@@ -80,12 +80,12 @@ const Row = (0, react_1.memo)((props) => {
 });
 const ExampleContextSelector = (props) => {
     const [state] = props.store;
-    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
+    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
                 // you should use multiple useContextSelector for proper work
                 // and there is no other way as it compares by reference
                 const value = useContextSelector(StoreCtx, ([data, setData]) => data[props.index]);
                 const setData = useContextSelector(StoreCtx, ([data, setData]) => setData);
-            ` }), (0, jsx_runtime_1.jsx)("div", { children: state.reduce((sum, x) => sum + x, 0) }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] })));
+            ` }), (0, jsx_runtime_1.jsx)("div", { children: state.reduce((sum, x) => sum + x, 0) }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
 };
 exports.ExampleContextSelector = ExampleContextSelector;
 
@@ -113,7 +113,7 @@ const App = () => {
     const store = (0, react_1.useState)(() => Array.from({ length: 100 }).map((_, i) => i));
     const [variant, setVariant] = (0, react_1.useState)('use-partial-context');
     const Component = variants[variant];
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("select", Object.assign({ onChange: evt => setVariant(evt.target.value) }, { children: Object.keys(variants).map(k => ((0, jsx_runtime_1.jsx)("option", Object.assign({ value: k }, { children: k })))) })) }), (0, jsx_runtime_1.jsx)(Component, { store: store })] }));
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("select", { onChange: evt => setVariant(evt.target.value), children: Object.keys(variants).map(k => ((0, jsx_runtime_1.jsx)("option", { value: k, children: k }))) }) }), (0, jsx_runtime_1.jsx)(Component, { store: store })] }));
 };
 (0, client_1.createRoot)(document.body).render((0, jsx_runtime_1.jsx)(App, {}));
 
@@ -123,8 +123,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamplePartialContextDeadProps = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-const _1 = require(".");
-const StoreCtx = (0, _1.createPartialContext)();
+const __1 = require("..");
+const StoreCtx = (0, __1.createPartialContext)();
 const Row = (0, react_1.memo)((props) => {
     const { value, setData } = StoreCtx.usePartialContext(([data, setData]) => ({
         value: data[props.index],
@@ -144,21 +144,21 @@ const Row = (0, react_1.memo)((props) => {
 });
 const ExamplePartialContextDeadProps = (props) => {
     const [state] = props.store;
-    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("a", Object.assign({ href: "https://react-redux.js.org/api/hooks#stale-props-and-zombie-children", target: "_blank" }, { children: "stale props" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("pre", { children: "You will see alert if dead prop found" }), (0, jsx_runtime_1.jsx)("hr", {}), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i, value: state[i] }, i)))] })));
+    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("a", { href: "https://react-redux.js.org/api/hooks#stale-props-and-zombie-children", target: "_blank", children: "stale props" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("pre", { children: "You will see alert if dead prop found" }), (0, jsx_runtime_1.jsx)("hr", {}), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i, value: state[i] }, i)))] }));
 };
 exports.ExamplePartialContextDeadProps = ExamplePartialContextDeadProps;
 
-},{".":8,"react":18,"react/jsx-runtime":19}],6:[function(require,module,exports){
+},{"..":8,"react":18,"react/jsx-runtime":19}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamplePartialContextHeavy = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-const _1 = require(".");
-const StoreCtx = (0, _1.createPartialContext)();
+const __1 = require("..");
+const StoreCtx = (0, __1.createPartialContext)();
 const Row = (0, react_1.memo)((props) => {
     const { value, setData } = StoreCtx.usePartialContext(([data, setData], prevValue) => {
-        if ((prevValue === null || prevValue === void 0 ? void 0 : prevValue.prevValue) === data[props.index])
+        if (prevValue?.prevValue === data[props.index])
             return prevValue;
         return {
             value: data[props.index] + Math.random(),
@@ -177,22 +177,22 @@ const Row = (0, react_1.memo)((props) => {
 });
 const ExamplePartialContextHeavy = (props) => {
     const [state] = props.store;
-    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
+    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
                 Imagine we have something heavy inside selector and we want to decide when to update
 
                 Because usePartialContext pass previous result, we could decide when to update
-            ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] })));
+            ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
 };
 exports.ExamplePartialContextHeavy = ExamplePartialContextHeavy;
 
-},{".":8,"react":18,"react/jsx-runtime":19}],7:[function(require,module,exports){
+},{"..":8,"react":18,"react/jsx-runtime":19}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamplePartialContext = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-const _1 = require(".");
-const StoreCtx = (0, _1.createPartialContext)();
+const __1 = require("..");
+const StoreCtx = (0, __1.createPartialContext)();
 const Row = (0, react_1.memo)((props) => {
     const { value, setData } = StoreCtx.usePartialContext(([data, setData]) => ({
         value: data[props.index],
@@ -209,17 +209,17 @@ const Row = (0, react_1.memo)((props) => {
 });
 const ExamplePartialContext = (props) => {
     const [state] = props.store;
-    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, Object.assign({ value: props.store }, { children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
+    return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
             // everything just works
             const { value, setData } = StoreCtx.usePartialContext(([data, setData]) => ({
                 value: data[props.index],
                 setData
             }));
-            ` }), (0, jsx_runtime_1.jsx)("div", { children: state.reduce((sum, x) => sum + x, 0) }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] })));
+            ` }), (0, jsx_runtime_1.jsx)("div", { children: state.reduce((sum, x) => sum + x, 0) }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
 };
 exports.ExamplePartialContext = ExamplePartialContext;
 
-},{".":8,"react":18,"react/jsx-runtime":19}],8:[function(require,module,exports){
+},{"..":8,"react":18,"react/jsx-runtime":19}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPartialContext = void 0;
@@ -258,7 +258,7 @@ function createPartialContext() {
         (0, react_1.useEffect)(() => {
             ref.current.subscribers.forEach(x => x());
         }, [props.value]);
-        return (0, jsx_runtime_1.jsx)(Ctx.Provider, Object.assign({ value: ref }, { children: props.children }));
+        return (0, jsx_runtime_1.jsx)(Ctx.Provider, { value: ref, children: props.children });
     }
     function useContext() {
         const ref = (0, react_1.useContext)(Ctx);

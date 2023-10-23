@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
-import { createPartialContext } from ".";
+import { createPartialContext } from "..";
 import type { ExampleStore } from "./example";
 
 const StoreCtx = createPartialContext<ExampleStore>();

@@ -16,7 +16,9 @@ React hook that provides ability to use only part of context, preventing unneces
 npm i use-partial-context
 ```
 
-[demo](https://morglod.github.io/use-partial-context/examples/example.html)
+[demo](https://morglod.github.io/use-partial-context/build_examples/example.html)
+
+[examples](./src/examples/)
 
 ## Usage
 

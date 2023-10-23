@@ -8,10 +8,16 @@ coverage
 lib/__tests__
 lib/opt-playgroud.*
 lib/example.*
+lib/examples
+lib/index.js
+lib/index.js.*
 ./.gitignore
 ./README.md
 docs
 examples
+build_examples
 package-lock.json
 LICENSE
 tsconfig.json
+./build.js
+./.npmignore
