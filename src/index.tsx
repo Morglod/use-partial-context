@@ -9,8 +9,7 @@ function defaultIsEqual<T>(next: T, prev: T) {
     if (next === prev) return true;
 
     if (Array.isArray(next)) {
-        if (!Array.isArray(prev)) return false;
-        if (next.length !== prev.length) return false;
+        if (!Array.isArray(prev) || next.length !== prev.length) return false;
         for (let i = 0; i < next.length; ++i) {
             if (prev[i] !== next[i]) return false;
         }
@@ -42,23 +41,6 @@ export function createPartialContext<T>() {
         }, [props.value]);
 
         return <Ctx.Provider value={ref}>{props.children}</Ctx.Provider>
-    }
-
-    function useContext() {
-        const ref = useContextReact(Ctx);
-        const [data, setData] = useState(ref.current.data);
-
-        useEffect(() => {
-            const handler = () => {
-                setData(ref.current.data);
-            };
-            ref.current.subscribers.push(handler);
-            return () => {
-                ref.current.subscribers = ref.current.subscribers.filter(x => x !== handler);
-            };
-        }, [ref]);
-
-        return data;
     }
 
     function usePartialContext<R>(
@@ -107,12 +89,11 @@ export function createPartialContext<T>() {
         return data;
     }
 
-    function Consumer(props: { children: (value: T) => any }) {
-        const value = useContext();
-        return props.children(value);
+    function useContext() {
+        return usePartialContext(x => x);
     }
 
-    function PartialConsumer<R>(props: {
+    function Consumer<R>(props: {
         selector: (data: T, prevValue?: R) => R,
         children: (value: R) => any,
         isEqual?: (next: R, prev: R) => boolean,
@@ -125,7 +106,6 @@ export function createPartialContext<T>() {
         RealContext: Ctx,
         Provider,
         Consumer,
-        PartialConsumer,
         useContext,
         usePartialContext
     };

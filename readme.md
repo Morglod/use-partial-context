@@ -94,7 +94,6 @@ const value = Context.usePartialContext((ctxData, prevResult) => {
     usePartialContext
     Consumer
     useContext
-    PartialConsumer
 }
 ```
 

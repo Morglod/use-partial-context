@@ -19,5 +19,4 @@ build_examples
 package-lock.json
 LICENSE
 tsconfig.json
-./build.js
-./.npmignore
+build.js

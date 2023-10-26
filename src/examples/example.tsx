@@ -28,7 +28,7 @@ const App = () => {
             <div>
                 <select onChange={evt => setVariant(evt.target.value as any)}>
                     {Object.keys(variants).map(k => (
-                        <option value={k}>{k}</option>
+                        <option key={k} value={k}>{k}</option>
                     ))}
                 </select>
             </div>

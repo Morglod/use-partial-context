@@ -113,7 +113,7 @@ const App = () => {
     const store = (0, react_1.useState)(() => Array.from({ length: 100 }).map((_, i) => i));
     const [variant, setVariant] = (0, react_1.useState)('use-partial-context');
     const Component = variants[variant];
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("select", { onChange: evt => setVariant(evt.target.value), children: Object.keys(variants).map(k => ((0, jsx_runtime_1.jsx)("option", { value: k, children: k }))) }) }), (0, jsx_runtime_1.jsx)(Component, { store: store })] }));
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("select", { onChange: evt => setVariant(evt.target.value), children: Object.keys(variants).map(k => ((0, jsx_runtime_1.jsx)("option", { value: k, children: k }, k))) }) }), (0, jsx_runtime_1.jsx)(Component, { store: store })] }));
 };
 (0, client_1.createRoot)(document.body).render((0, jsx_runtime_1.jsx)(App, {}));
 
@@ -229,9 +229,7 @@ function defaultIsEqual(next, prev) {
     if (next === prev)
         return true;
     if (Array.isArray(next)) {
-        if (!Array.isArray(prev))
-            return false;
-        if (next.length !== prev.length)
+        if (!Array.isArray(prev) || next.length !== prev.length)
             return false;
         for (let i = 0; i < next.length; ++i) {
             if (prev[i] !== next[i])
@@ -259,20 +257,6 @@ function createPartialContext() {
             ref.current.subscribers.forEach(x => x());
         }, [props.value]);
         return (0, jsx_runtime_1.jsx)(Ctx.Provider, { value: ref, children: props.children });
-    }
-    function useContext() {
-        const ref = (0, react_1.useContext)(Ctx);
-        const [data, setData] = (0, react_1.useState)(ref.current.data);
-        (0, react_1.useEffect)(() => {
-            const handler = () => {
-                setData(ref.current.data);
-            };
-            ref.current.subscribers.push(handler);
-            return () => {
-                ref.current.subscribers = ref.current.subscribers.filter(x => x !== handler);
-            };
-        }, [ref]);
-        return data;
     }
     function usePartialContext(getter, deps = [], isEqual = defaultIsEqual) {
         const ref = (0, react_1.useContext)(Ctx);
@@ -312,11 +296,10 @@ function createPartialContext() {
         }, deps);
         return data;
     }
-    function Consumer(props) {
-        const value = useContext();
-        return props.children(value);
+    function useContext() {
+        return usePartialContext(x => x);
     }
-    function PartialConsumer(props) {
+    function Consumer(props) {
         const value = usePartialContext(props.selector, [], props.isEqual);
         return props.children(value);
     }
@@ -324,7 +307,6 @@ function createPartialContext() {
         RealContext: Ctx,
         Provider,
         Consumer,
-        PartialConsumer,
         useContext,
         usePartialContext
     };
