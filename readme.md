@@ -1,5 +1,6 @@
 [![NPM Version](https://badge.fury.io/js/use-partial-context.svg?style=flat)](https://www.npmjs.com/package/use-partial-context)
 [![Size](https://img.shields.io/bundlephobia/minzip/use-partial-context)](https://gitHub.com/Morglod/use-partial-context/)
+[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/Morglod/use-partial-context.svg?maxAge=2592000)](https://codecov.io/github/Morglod/use-partial-context?branch=master)
 [![GitHub stars](https://img.shields.io/github/stars/Morglod/use-partial-context.svg?style=social&label=Star&maxAge=2592000)](https://gitHub.com/Morglod/use-partial-context/)
 
 # usePartialContext
@@ -11,6 +12,7 @@ React hook that provides ability to use only part of context, preventing unneces
 -   Performant
 -   Fully typed with typescript
 -   "Stale props" problem solved in user land
+-   Could pass custom context & result equal fn
 
 ```sh
 npm i use-partial-context
@@ -84,6 +86,18 @@ const value = Context.usePartialContext((ctxData, prevResult) => {
 });
 ```
 
+Prevent getter calls by comparing incoming data:
+
+```jsx
+const value = Context.usePartialContext(
+    getter,
+    deps,
+    undefined,
+    // do not call getter while `smth` inside context is equal
+    (nextCtx, prevCtx) => nextCtx.smth === prevCtx.smth
+);
+```
+
 ## Api
 
 `createPartialContext<T>()` returns context object:
@@ -97,19 +111,21 @@ const value = Context.usePartialContext((ctxData, prevResult) => {
 }
 ```
 
-#### `context.usePartialContext(getter, deps?, isEqual?)`
+#### `context.usePartialContext(getter, deps?, isEqual?, isDataEqual?)`
 
 ```ts
 context.usePartialContext<Result>(
     getter: (contextData: ContextDataT, prevResult?: Result): Result,
     deps?: any[],
-    isEqual?: (next: Result, prev: Result): boolean
+    isEqual?: (next: Result, prev: Result): boolean,
+    isDataEqual?: (next: ContextDataT, prev: ContextDataT): boolean
 ): R
 ```
 
 `getter` transforms value from context to result.  
 `deps` is used to force get new value from context with new `getter` function.  
-`isEqual` is custom comparison method for result value.
+`isEqual` is custom comparison method for result value.  
+`isDataEqual` is custom comparison method for incoming context data.
 
 ## Alternatives
 

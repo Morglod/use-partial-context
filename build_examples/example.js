@@ -222,10 +222,10 @@ exports.ExamplePartialContext = ExamplePartialContext;
 },{"..":8,"react":18,"react/jsx-runtime":19}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPartialContext = void 0;
+exports.createPartialContext = exports.pctxDefaultIsEqual = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-function defaultIsEqual(next, prev) {
+function pctxDefaultIsEqual(next, prev) {
     if (next === prev)
         return true;
     if (Array.isArray(next)) {
@@ -248,23 +248,30 @@ function defaultIsEqual(next, prev) {
     }
     return false;
 }
+exports.pctxDefaultIsEqual = pctxDefaultIsEqual;
+const strictEqual = (x, y) => x === y;
 function createPartialContext() {
     const Ctx = (0, react_1.createContext)(undefined);
     function Provider(props) {
         const ref = (0, react_1.useRef)({ subscribers: [] });
         ref.current.data = props.value;
+        // prevent rerender after mount
+        const currentSubs = Array.from(ref.current.subscribers);
         (0, react_1.useEffect)(() => {
-            ref.current.subscribers.forEach(x => x());
+            currentSubs.forEach(x => x());
         }, [props.value]);
         return (0, jsx_runtime_1.jsx)(Ctx.Provider, { value: ref, children: props.children });
     }
-    function usePartialContext(getter, deps = [], isEqual = defaultIsEqual) {
+    function usePartialContext(getter, deps = [], isEqual = pctxDefaultIsEqual, isDataEqual = strictEqual) {
         const ref = (0, react_1.useContext)(Ctx);
-        const prevCtxData = (0, react_1.useRef)(ref.current.data);
+        const prevCtxData = (0, react_1.useRef)(undefined);
+        if (prevCtxData.current === undefined) {
+            prevCtxData.current = { effectInit: false, ctx: ref.current.data };
+        }
         let [data, setData] = (0, react_1.useState)(() => getter(ref.current.data));
         // handle components rerender & new props
-        if (ref.current.data !== prevCtxData.current) {
-            prevCtxData.current = ref.current.data;
+        if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
+            prevCtxData.current.ctx = ref.current.data;
             const nextData = getter(ref.current.data);
             if (!isEqual(nextData, data)) {
                 data = nextData;
@@ -272,21 +279,25 @@ function createPartialContext() {
         }
         (0, react_1.useEffect)(() => {
             // handle deps change & first effect call without deps change
-            if (ref.current.data !== prevCtxData.current) {
-                prevCtxData.current = ref.current.data;
+            if (prevCtxData.current.effectInit) {
+                prevCtxData.current.ctx = ref.current.data;
                 const nextData = getter(ref.current.data);
                 if (!isEqual(nextData, data)) {
                     setData(nextData);
                 }
             }
+            prevCtxData.current.effectInit = true;
             // handle context change
             const handler = () => {
                 setData(prevData => {
-                    prevCtxData.current = ref.current.data;
-                    const nextData = getter(ref.current.data, prevData);
-                    if (isEqual(nextData, prevData))
-                        return prevData;
-                    return nextData;
+                    if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
+                        prevCtxData.current.ctx = ref.current.data;
+                        const nextData = getter(ref.current.data, prevData);
+                        if (isEqual(nextData, prevData))
+                            return prevData;
+                        return nextData;
+                    }
+                    return prevData;
                 });
             };
             ref.current.subscribers.push(handler);

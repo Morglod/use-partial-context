@@ -20,3 +20,7 @@ package-lock.json
 LICENSE
 tsconfig.json
 build.js
+jest.config.js
+coverage
+src/__tests__
+lib/__tests__
