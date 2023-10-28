@@ -54,12 +54,16 @@ export function createPartialContext<T>() {
         isDataEqual: (next: T, prev: T) => boolean = strictEqual
     ): R {
         const ref = useContextReact(Ctx);
-        const prevCtxData = useRef<{ effectInit: boolean, ctx: T }>(undefined!);
+        const prevCtxData = useRef<{ effectInit: boolean, ctx: T, prevData: R }>(undefined!);
         if (prevCtxData.current === undefined) {
-            prevCtxData.current = { effectInit: false, ctx: ref.current.data };
+            prevCtxData.current = {
+                effectInit: false,
+                ctx: ref.current.data,
+                prevData: getter(ref.current.data)
+            };
         }
 
-        let [data, setData] = useState<R>(() => getter(ref.current.data));
+        let [data, setData] = useState<R>(() => prevCtxData.current.prevData);
 
         // handle components rerender & new props
         if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
@@ -67,6 +71,7 @@ export function createPartialContext<T>() {
             const nextData = getter(ref.current.data);
             if (!isEqual(nextData, data)) {
                 data = nextData;
+                prevCtxData.current.prevData = nextData;
             }
         }
 
@@ -90,7 +95,7 @@ export function createPartialContext<T>() {
                         if (isEqual(nextData, prevData)) return prevData;
                         return nextData;
                     }
-                    return prevData;
+                    return prevCtxData.current.prevData;
                 });
             };
             ref.current.subscribers.push(handler);

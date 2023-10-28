@@ -266,15 +266,20 @@ function createPartialContext() {
         const ref = (0, react_1.useContext)(Ctx);
         const prevCtxData = (0, react_1.useRef)(undefined);
         if (prevCtxData.current === undefined) {
-            prevCtxData.current = { effectInit: false, ctx: ref.current.data };
+            prevCtxData.current = {
+                effectInit: false,
+                ctx: ref.current.data,
+                prevData: getter(ref.current.data)
+            };
         }
-        let [data, setData] = (0, react_1.useState)(() => getter(ref.current.data));
+        let [data, setData] = (0, react_1.useState)(() => prevCtxData.current.prevData);
         // handle components rerender & new props
         if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
             prevCtxData.current.ctx = ref.current.data;
             const nextData = getter(ref.current.data);
             if (!isEqual(nextData, data)) {
                 data = nextData;
+                prevCtxData.current.prevData = nextData;
             }
         }
         (0, react_1.useEffect)(() => {
@@ -297,7 +302,7 @@ function createPartialContext() {
                             return prevData;
                         return nextData;
                     }
-                    return prevData;
+                    return prevCtxData.current.prevData;
                 });
             };
             ref.current.subscribers.push(handler);
