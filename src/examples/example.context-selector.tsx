@@ -25,6 +25,17 @@ const Row = memo((props: { index: number }) => {
     );
 });
 
+const ListSum = memo(() => {
+    const sum = useContextSelector(StoreCtx, ([data]) => data.reduce((sum, x) => sum + x, 0));
+    return <div>{sum}</div>
+});
+
+const ListRenderer = memo((props: { length: number }) => (
+    <>{Array.from({ length: props.length }).map((_, i) => (
+        <Row key={i} index={i} />
+    ))}</>
+));
+
 export const ExampleContextSelector = (props: { store: ExampleStore }) => {
     const [state] = props.store;
 
@@ -37,10 +48,8 @@ export const ExampleContextSelector = (props: { store: ExampleStore }) => {
                 const value = useContextSelector(StoreCtx, ([data, setData]) => data[props.index]);
                 const setData = useContextSelector(StoreCtx, ([data, setData]) => setData);
             `}</pre>
-            <div>{state.reduce((sum, x) => sum + x, 0)}</div>
-            {state.map((_, i) => (
-                <Row key={i} index={i} />
-            ))}
+            <ListSum />
+            <ListRenderer length={state.length} />
         </StoreCtx.Provider>
     );
 };

@@ -26,6 +26,17 @@ const Row = memo((props: { index: number }) => {
     );
 });
 
+const ListSum = memo(() => {
+    const sum = StoreCtx.usePartialContext(([data]) => data.reduce((sum, x) => sum + x, 0));
+    return <div>{sum}</div>
+});
+
+const ListRenderer = memo((props: { length: number }) => (
+    <>{Array.from({ length: props.length }).map((_, i) => (
+        <Row key={i} index={i} />
+    ))}</>
+));
+
 export const ExamplePartialContext = (props: { store: ExampleStore }) => {
     const [state] = props.store;
 
@@ -39,10 +50,8 @@ export const ExamplePartialContext = (props: { store: ExampleStore }) => {
                 setData
             }));
             `}</pre>
-            <div>{state.reduce((sum, x) => sum + x, 0)}</div>
-            {state.map((_, i) => (
-                <Row key={i} index={i} />
-            ))}
+            <ListSum />
+            <ListRenderer length={state.length} />
         </StoreCtx.Provider>
     );
 };

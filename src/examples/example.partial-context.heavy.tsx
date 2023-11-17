@@ -36,6 +36,12 @@ const Row = memo((props: { index: number }) => {
     );
 });
 
+const ListRenderer = memo((props: { length: number }) => (
+    <>{Array.from({ length: props.length }).map((_, i) => (
+        <Row key={i} index={i} />
+    ))}</>
+));
+
 export const ExamplePartialContextHeavy = (props: { store: ExampleStore }) => {
     const [state] = props.store;
 
@@ -47,9 +53,7 @@ export const ExamplePartialContextHeavy = (props: { store: ExampleStore }) => {
 
                 Because usePartialContext pass previous result, we could decide when to update
             `}</pre>
-            {state.map((_, i) => (
-                <Row key={i} index={i} />
-            ))}
+            <ListRenderer length={state.length} />
         </StoreCtx.Provider>
     );
 };

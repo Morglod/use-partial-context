@@ -25,6 +25,12 @@ const Row = memo((props: { index: number }) => {
     );
 });
 
+const ListRenderer = memo((props: { length: number }) => (
+    <>{Array.from({ length: props.length }).map((_, i) => (
+        <Row key={i} index={i} />
+    ))}</>
+));
+
 export const ExampleContextSelectorHeavy = (props: { store: ExampleStore }) => {
     const [state] = props.store;
 
@@ -34,9 +40,7 @@ export const ExampleContextSelectorHeavy = (props: { store: ExampleStore }) => {
             <pre>{`
                 Imagine we have something heavy inside selector and we want to decide when to update
             `}</pre>
-            {state.map((_, i) => (
-                <Row key={i} index={i} />
-            ))}
+            <ListRenderer length={state.length} />
         </StoreCtx.Provider>
     );
 };

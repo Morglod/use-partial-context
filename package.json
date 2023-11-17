@@ -1,6 +1,6 @@
 {
   "name": "use-partial-context",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Use only part of context, preventing unnecessary updates",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",

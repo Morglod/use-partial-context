@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ExamplePartialContext } from "./example.partial-context";
 import { ExampleContextSelector } from "./example.context-selector";
@@ -19,7 +19,10 @@ const variants = {
 };
 
 const App = () => {
-    const store = useState(() => Array.from({ length: 100 }).map((_, i) => i));
+    const [state, setState_] = useState(() => Array.from({ length: 100 }).map((_, i) => i));
+    const setState = useCallback((e: any) => {
+        setState_(e);
+    }, []);
     const [variant, setVariant] = useState<keyof typeof variants>('use-partial-context');
     const Component = variants[variant];
 
@@ -32,7 +35,7 @@ const App = () => {
                     ))}
                 </select>
             </div>
-            <Component store={store} />
+            <Component store={[state, setState]} />
         </>
     );
 };

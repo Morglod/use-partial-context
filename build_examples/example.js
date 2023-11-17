@@ -49,11 +49,12 @@ const Row = (0, react_1.memo)((props) => {
     }, [props.index]);
     return ((0, jsx_runtime_1.jsxs)("div", { children: [Math.random().toFixed(2), (0, jsx_runtime_1.jsx)("input", { type: "number", value: value, onChange: handleChange })] }));
 });
+const ListRenderer = (0, react_1.memo)((props) => ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: Array.from({ length: props.length }).map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i))) })));
 const ExampleContextSelectorHeavy = (props) => {
     const [state] = props.store;
     return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
                 Imagine we have something heavy inside selector and we want to decide when to update
-            ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
+            ` }), (0, jsx_runtime_1.jsx)(ListRenderer, { length: state.length })] }));
 };
 exports.ExampleContextSelectorHeavy = ExampleContextSelectorHeavy;
 
@@ -78,6 +79,11 @@ const Row = (0, react_1.memo)((props) => {
     }, [props.index]);
     return ((0, jsx_runtime_1.jsxs)("div", { children: [Math.random().toFixed(2), (0, jsx_runtime_1.jsx)("input", { type: "number", value: value, onChange: handleChange })] }));
 });
+const ListSum = (0, react_1.memo)(() => {
+    const sum = (0, use_context_selector_1.useContextSelector)(StoreCtx, ([data]) => data.reduce((sum, x) => sum + x, 0));
+    return (0, jsx_runtime_1.jsx)("div", { children: sum });
+});
+const ListRenderer = (0, react_1.memo)((props) => ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: Array.from({ length: props.length }).map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i))) })));
 const ExampleContextSelector = (props) => {
     const [state] = props.store;
     return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
@@ -85,7 +91,7 @@ const ExampleContextSelector = (props) => {
                 // and there is no other way as it compares by reference
                 const value = useContextSelector(StoreCtx, ([data, setData]) => data[props.index]);
                 const setData = useContextSelector(StoreCtx, ([data, setData]) => setData);
-            ` }), (0, jsx_runtime_1.jsx)("div", { children: state.reduce((sum, x) => sum + x, 0) }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
+            ` }), (0, jsx_runtime_1.jsx)(ListSum, {}), (0, jsx_runtime_1.jsx)(ListRenderer, { length: state.length })] }));
 };
 exports.ExampleContextSelector = ExampleContextSelector;
 
@@ -110,10 +116,13 @@ const variants = {
     'use-context-selector heavy': example_context_selector_heavy_1.ExampleContextSelectorHeavy,
 };
 const App = () => {
-    const store = (0, react_1.useState)(() => Array.from({ length: 100 }).map((_, i) => i));
+    const [state, setState_] = (0, react_1.useState)(() => Array.from({ length: 100 }).map((_, i) => i));
+    const setState = (0, react_1.useCallback)((e) => {
+        setState_(e);
+    }, []);
     const [variant, setVariant] = (0, react_1.useState)('use-partial-context');
     const Component = variants[variant];
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("select", { onChange: evt => setVariant(evt.target.value), children: Object.keys(variants).map(k => ((0, jsx_runtime_1.jsx)("option", { value: k, children: k }, k))) }) }), (0, jsx_runtime_1.jsx)(Component, { store: store })] }));
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("select", { onChange: evt => setVariant(evt.target.value), children: Object.keys(variants).map(k => ((0, jsx_runtime_1.jsx)("option", { value: k, children: k }, k))) }) }), (0, jsx_runtime_1.jsx)(Component, { store: [state, setState] })] }));
 };
 (0, client_1.createRoot)(document.body).render((0, jsx_runtime_1.jsx)(App, {}));
 
@@ -175,13 +184,14 @@ const Row = (0, react_1.memo)((props) => {
     }, [props.index]);
     return ((0, jsx_runtime_1.jsxs)("div", { children: [Math.random().toFixed(2), (0, jsx_runtime_1.jsx)("input", { type: "number", value: value, onChange: handleChange })] }));
 });
+const ListRenderer = (0, react_1.memo)((props) => ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: Array.from({ length: props.length }).map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i))) })));
 const ExamplePartialContextHeavy = (props) => {
     const [state] = props.store;
     return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
                 Imagine we have something heavy inside selector and we want to decide when to update
 
                 Because usePartialContext pass previous result, we could decide when to update
-            ` }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
+            ` }), (0, jsx_runtime_1.jsx)(ListRenderer, { length: state.length })] }));
 };
 exports.ExamplePartialContextHeavy = ExamplePartialContextHeavy;
 
@@ -207,6 +217,11 @@ const Row = (0, react_1.memo)((props) => {
     }, [props.index]);
     return ((0, jsx_runtime_1.jsxs)("div", { children: [Math.random().toFixed(2), (0, jsx_runtime_1.jsx)("input", { type: "number", value: value, onChange: handleChange })] }));
 });
+const ListSum = (0, react_1.memo)(() => {
+    const sum = StoreCtx.usePartialContext(([data]) => data.reduce((sum, x) => sum + x, 0));
+    return (0, jsx_runtime_1.jsx)("div", { children: sum });
+});
+const ListRenderer = (0, react_1.memo)((props) => ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: Array.from({ length: props.length }).map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i))) })));
 const ExamplePartialContext = (props) => {
     const [state] = props.store;
     return ((0, jsx_runtime_1.jsxs)(StoreCtx.Provider, { value: props.store, children: [(0, jsx_runtime_1.jsx)("div", { children: "if row will be updated, random values will change" }), (0, jsx_runtime_1.jsx)("pre", { children: `
@@ -215,7 +230,7 @@ const ExamplePartialContext = (props) => {
                 value: data[props.index],
                 setData
             }));
-            ` }), (0, jsx_runtime_1.jsx)("div", { children: state.reduce((sum, x) => sum + x, 0) }), state.map((_, i) => ((0, jsx_runtime_1.jsx)(Row, { index: i }, i)))] }));
+            ` }), (0, jsx_runtime_1.jsx)(ListSum, {}), (0, jsx_runtime_1.jsx)(ListRenderer, { length: state.length })] }));
 };
 exports.ExamplePartialContext = ExamplePartialContext;
 
@@ -264,53 +279,51 @@ function createPartialContext() {
     }
     function usePartialContext(getter, deps = [], isEqual = pctxDefaultIsEqual, isDataEqual = strictEqual) {
         const ref = (0, react_1.useContext)(Ctx);
-        const prevCtxData = (0, react_1.useRef)(undefined);
-        if (prevCtxData.current === undefined) {
-            prevCtxData.current = {
+        const partialData = (0, react_1.useRef)(undefined);
+        if (partialData.current === undefined) {
+            partialData.current = {
                 effectInit: false,
                 ctx: ref.current.data,
-                prevData: getter(ref.current.data)
+                getterValue: getter(ref.current.data)
             };
         }
-        let [data, setData] = (0, react_1.useState)(() => prevCtxData.current.prevData);
+        const [, setRerender] = (0, react_1.useState)(0);
         // handle components rerender & new props
-        if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
-            prevCtxData.current.ctx = ref.current.data;
-            const nextData = getter(ref.current.data);
-            if (!isEqual(nextData, data)) {
-                data = nextData;
-                prevCtxData.current.prevData = nextData;
+        if (!isDataEqual(ref.current.data, partialData.current.ctx)) {
+            partialData.current.ctx = ref.current.data;
+            const nextGetterValue = getter(ref.current.data);
+            if (!isEqual(nextGetterValue, partialData.current.getterValue)) {
+                partialData.current.getterValue = nextGetterValue;
             }
         }
         (0, react_1.useEffect)(() => {
             // handle deps change & first effect call without deps change
-            if (prevCtxData.current.effectInit) {
-                prevCtxData.current.ctx = ref.current.data;
-                const nextData = getter(ref.current.data);
-                if (!isEqual(nextData, data)) {
-                    setData(nextData);
+            if (partialData.current.effectInit) {
+                partialData.current.ctx = ref.current.data;
+                const nextGetterValue = getter(ref.current.data);
+                if (!isEqual(nextGetterValue, partialData.current.getterValue)) {
+                    partialData.current.getterValue = nextGetterValue;
+                    setRerender(x => x + 1);
                 }
             }
-            prevCtxData.current.effectInit = true;
+            partialData.current.effectInit = true;
             // handle context change
             const handler = () => {
-                setData(prevData => {
-                    if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
-                        prevCtxData.current.ctx = ref.current.data;
-                        const nextData = getter(ref.current.data, prevData);
-                        if (isEqual(nextData, prevData))
-                            return prevData;
-                        return nextData;
+                if (!isDataEqual(ref.current.data, partialData.current.ctx)) {
+                    partialData.current.ctx = ref.current.data;
+                    const nextGetterValue = getter(ref.current.data, partialData.current.getterValue);
+                    if (!isEqual(nextGetterValue, partialData.current.getterValue)) {
+                        partialData.current.getterValue = nextGetterValue;
+                        setRerender(x => x + 1);
                     }
-                    return prevCtxData.current.prevData;
-                });
+                }
             };
             ref.current.subscribers.push(handler);
             return () => {
                 ref.current.subscribers = ref.current.subscribers.filter(x => x !== handler);
             };
         }, deps);
-        return data;
+        return partialData.current.getterValue;
     }
     function useContext() {
         return usePartialContext(x => x);

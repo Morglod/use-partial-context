@@ -54,49 +54,48 @@ export function createPartialContext<T>() {
         isDataEqual: (next: T, prev: T) => boolean = strictEqual
     ): R {
         const ref = useContextReact(Ctx);
-        const prevCtxData = useRef<{ effectInit: boolean, ctx: T, prevData: R }>(undefined!);
-        if (prevCtxData.current === undefined) {
-            prevCtxData.current = {
+        const partialData = useRef<{ effectInit: boolean, ctx: T, getterValue: R }>(undefined!);
+        if (partialData.current === undefined) {
+            partialData.current = {
                 effectInit: false,
                 ctx: ref.current.data,
-                prevData: getter(ref.current.data)
+                getterValue: getter(ref.current.data)
             };
         }
 
-        let [data, setData] = useState<R>(() => prevCtxData.current.prevData);
+        const [, setRerender] = useState(0);
 
         // handle components rerender & new props
-        if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
-            prevCtxData.current.ctx = ref.current.data;
-            const nextData = getter(ref.current.data);
-            if (!isEqual(nextData, data)) {
-                data = nextData;
-                prevCtxData.current.prevData = nextData;
+        if (!isDataEqual(ref.current.data, partialData.current.ctx)) {
+            partialData.current.ctx = ref.current.data;
+            const nextGetterValue = getter(ref.current.data);
+            if (!isEqual(nextGetterValue, partialData.current.getterValue)) {
+                partialData.current.getterValue = nextGetterValue;
             }
         }
 
         useEffect(() => {
             // handle deps change & first effect call without deps change
-            if (prevCtxData.current.effectInit) {
-                prevCtxData.current.ctx = ref.current.data;
-                const nextData = getter(ref.current.data);
-                if (!isEqual(nextData, data)) {
-                    setData(nextData);
+            if (partialData.current.effectInit) {
+                partialData.current.ctx = ref.current.data;
+                const nextGetterValue = getter(ref.current.data);
+                if (!isEqual(nextGetterValue, partialData.current.getterValue)) {
+                    partialData.current.getterValue = nextGetterValue;
+                    setRerender(x => x + 1);
                 }
             }
-            prevCtxData.current.effectInit = true;
+            partialData.current.effectInit = true;
 
             // handle context change
             const handler = () => {
-                setData(prevData => {
-                    if (!isDataEqual(ref.current.data, prevCtxData.current.ctx)) {
-                        prevCtxData.current.ctx = ref.current.data;
-                        const nextData = getter(ref.current.data, prevData);
-                        if (isEqual(nextData, prevData)) return prevData;
-                        return nextData;
+                if (!isDataEqual(ref.current.data, partialData.current.ctx)) {
+                    partialData.current.ctx = ref.current.data;
+                    const nextGetterValue = getter(ref.current.data, partialData.current.getterValue);
+                    if (!isEqual(nextGetterValue, partialData.current.getterValue)) {
+                        partialData.current.getterValue = nextGetterValue;
+                        setRerender(x => x + 1);
                     }
-                    return prevCtxData.current.prevData;
-                });
+                }
             };
             ref.current.subscribers.push(handler);
             return () => {
@@ -104,7 +103,7 @@ export function createPartialContext<T>() {
             };
         }, deps);
 
-        return data;
+        return partialData.current.getterValue;
     }
 
     function useContext() {
