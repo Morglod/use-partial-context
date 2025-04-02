@@ -1,4 +1,10 @@
-import { useContext as useContextReact, createContext, useEffect, useRef, useState } from "react";
+import { useContext as useContextReact, createContext, useEffect, useRef, useState, useLayoutEffect } from "react";
+
+const isSSR =
+  typeof window === 'undefined' ||
+  /ServerSideRendering/.test(window.navigator && window.navigator.userAgent);
+
+const useIsomorphicLayoutEffect = isSSR ? useEffect : useLayoutEffect;
 
 type StateRef<T> = {
     data: T,
@@ -37,13 +43,13 @@ export function createPartialContext<T>() {
     function Provider(props: { value: T, children?: any }) {
         const ref = useRef<StateRef<T>>({ subscribers: [] } as any);
         ref.current.data = props.value;
-
+        
         // prevent rerender after mount
         const currentSubs = Array.from(ref.current.subscribers);
-        useEffect(() => {
+        useIsomorphicLayoutEffect(() => {
             currentSubs.forEach(x => x());
         }, [props.value]);
-
+    
         return <Ctx.Provider value={ref}>{props.children}</Ctx.Provider>
     }
 

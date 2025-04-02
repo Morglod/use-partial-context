@@ -28,7 +28,7 @@ const ExampleContextSelectorDeadProps = (props) => {
 };
 exports.ExampleContextSelectorDeadProps = ExampleContextSelectorDeadProps;
 
-},{"react":18,"react/jsx-runtime":19,"use-context-selector":24}],2:[function(require,module,exports){
+},{"react":21,"react/jsx-runtime":22,"use-context-selector":27}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExampleContextSelectorHeavy = void 0;
@@ -58,7 +58,7 @@ const ExampleContextSelectorHeavy = (props) => {
 };
 exports.ExampleContextSelectorHeavy = ExampleContextSelectorHeavy;
 
-},{"react":18,"react/jsx-runtime":19,"use-context-selector":24}],3:[function(require,module,exports){
+},{"react":21,"react/jsx-runtime":22,"use-context-selector":27}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExampleContextSelector = void 0;
@@ -95,7 +95,7 @@ const ExampleContextSelector = (props) => {
 };
 exports.ExampleContextSelector = ExampleContextSelector;
 
-},{"react":18,"react/jsx-runtime":19,"use-context-selector":24}],4:[function(require,module,exports){
+},{"react":21,"react/jsx-runtime":22,"use-context-selector":27}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
@@ -126,7 +126,7 @@ const App = () => {
 };
 (0, client_1.createRoot)(document.body).render((0, jsx_runtime_1.jsx)(App, {}));
 
-},{"./example.context-selector":3,"./example.context-selector.dead-props":1,"./example.context-selector.heavy":2,"./example.partial-context":7,"./example.partial-context.dead-props":5,"./example.partial-context.heavy":6,"react":18,"react-dom/client":12,"react/jsx-runtime":19}],5:[function(require,module,exports){
+},{"./example.context-selector":3,"./example.context-selector.dead-props":1,"./example.context-selector.heavy":2,"./example.partial-context":7,"./example.partial-context.dead-props":5,"./example.partial-context.heavy":6,"react":21,"react-dom/client":12,"react/jsx-runtime":22}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamplePartialContextDeadProps = void 0;
@@ -157,7 +157,7 @@ const ExamplePartialContextDeadProps = (props) => {
 };
 exports.ExamplePartialContextDeadProps = ExamplePartialContextDeadProps;
 
-},{"..":8,"react":18,"react/jsx-runtime":19}],6:[function(require,module,exports){
+},{"..":8,"react":21,"react/jsx-runtime":22}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamplePartialContextHeavy = void 0;
@@ -195,7 +195,7 @@ const ExamplePartialContextHeavy = (props) => {
 };
 exports.ExamplePartialContextHeavy = ExamplePartialContextHeavy;
 
-},{"..":8,"react":18,"react/jsx-runtime":19}],7:[function(require,module,exports){
+},{"..":8,"react":21,"react/jsx-runtime":22}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamplePartialContext = void 0;
@@ -234,12 +234,15 @@ const ExamplePartialContext = (props) => {
 };
 exports.ExamplePartialContext = ExamplePartialContext;
 
-},{"..":8,"react":18,"react/jsx-runtime":19}],8:[function(require,module,exports){
+},{"..":8,"react":21,"react/jsx-runtime":22}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPartialContext = exports.pctxDefaultIsEqual = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
+const isSSR = typeof window === 'undefined' ||
+    /ServerSideRendering/.test(window.navigator && window.navigator.userAgent);
+const useIsomorphicLayoutEffect = isSSR ? react_1.useEffect : react_1.useLayoutEffect;
 function pctxDefaultIsEqual(next, prev) {
     if (next === prev)
         return true;
@@ -272,7 +275,7 @@ function createPartialContext() {
         ref.current.data = props.value;
         // prevent rerender after mount
         const currentSubs = Array.from(ref.current.subscribers);
-        (0, react_1.useEffect)(() => {
+        useIsomorphicLayoutEffect(() => {
             currentSubs.forEach(x => x());
         }, [props.value]);
         return (0, jsx_runtime_1.jsx)(Ctx.Provider, { value: ref, children: props.children });
@@ -342,7 +345,7 @@ function createPartialContext() {
 }
 exports.createPartialContext = createPartialContext;
 
-},{"react":18,"react/jsx-runtime":19}],9:[function(require,module,exports){
+},{"react":21,"react/jsx-runtime":22}],9:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -30400,7 +30403,7 @@ if (
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":9,"react":18,"scheduler":22}],11:[function(require,module,exports){
+},{"_process":9,"react":21,"scheduler":16}],11:[function(require,module,exports){
 /**
  * @license React
  * react-dom.production.min.js
@@ -30725,7 +30728,7 @@ exports.hydrateRoot=function(a,b,c){if(!ol(a))throw Error(p(405));var d=null!=c&
 e);return new nl(b)};exports.render=function(a,b,c){if(!pl(b))throw Error(p(200));return sl(null,a,b,!1,c)};exports.unmountComponentAtNode=function(a){if(!pl(a))throw Error(p(40));return a._reactRootContainer?(Sk(function(){sl(null,null,a,!1,function(){a._reactRootContainer=null;a[uf]=null})}),!0):!1};exports.unstable_batchedUpdates=Rk;
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!pl(c))throw Error(p(200));if(null==a||void 0===a._reactInternals)throw Error(p(38));return sl(a,b,c,!1,d)};exports.version="18.2.0-next-9e3b772b8-20220608";
 
-},{"react":18,"scheduler":22}],12:[function(require,module,exports){
+},{"react":21,"scheduler":16}],12:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -30797,6 +30800,678 @@ if (process.env.NODE_ENV === 'production') {
 
 }).call(this)}).call(this,require('_process'))
 },{"./cjs/react-dom.development.js":10,"./cjs/react-dom.production.min.js":11,"_process":9}],14:[function(require,module,exports){
+(function (process,setImmediate){(function (){
+/**
+ * @license React
+ * scheduler.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+'use strict';
+
+if (process.env.NODE_ENV !== "production") {
+  (function() {
+
+          'use strict';
+
+/* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+if (
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart ===
+    'function'
+) {
+  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+}
+          var enableSchedulerDebugging = false;
+var enableProfiling = false;
+var frameYieldMs = 5;
+
+function push(heap, node) {
+  var index = heap.length;
+  heap.push(node);
+  siftUp(heap, node, index);
+}
+function peek(heap) {
+  return heap.length === 0 ? null : heap[0];
+}
+function pop(heap) {
+  if (heap.length === 0) {
+    return null;
+  }
+
+  var first = heap[0];
+  var last = heap.pop();
+
+  if (last !== first) {
+    heap[0] = last;
+    siftDown(heap, last, 0);
+  }
+
+  return first;
+}
+
+function siftUp(heap, node, i) {
+  var index = i;
+
+  while (index > 0) {
+    var parentIndex = index - 1 >>> 1;
+    var parent = heap[parentIndex];
+
+    if (compare(parent, node) > 0) {
+      // The parent is larger. Swap positions.
+      heap[parentIndex] = node;
+      heap[index] = parent;
+      index = parentIndex;
+    } else {
+      // The parent is smaller. Exit.
+      return;
+    }
+  }
+}
+
+function siftDown(heap, node, i) {
+  var index = i;
+  var length = heap.length;
+  var halfLength = length >>> 1;
+
+  while (index < halfLength) {
+    var leftIndex = (index + 1) * 2 - 1;
+    var left = heap[leftIndex];
+    var rightIndex = leftIndex + 1;
+    var right = heap[rightIndex]; // If the left or right node is smaller, swap with the smaller of those.
+
+    if (compare(left, node) < 0) {
+      if (rightIndex < length && compare(right, left) < 0) {
+        heap[index] = right;
+        heap[rightIndex] = node;
+        index = rightIndex;
+      } else {
+        heap[index] = left;
+        heap[leftIndex] = node;
+        index = leftIndex;
+      }
+    } else if (rightIndex < length && compare(right, node) < 0) {
+      heap[index] = right;
+      heap[rightIndex] = node;
+      index = rightIndex;
+    } else {
+      // Neither child is smaller. Exit.
+      return;
+    }
+  }
+}
+
+function compare(a, b) {
+  // Compare sort index first, then task id.
+  var diff = a.sortIndex - b.sortIndex;
+  return diff !== 0 ? diff : a.id - b.id;
+}
+
+// TODO: Use symbols?
+var ImmediatePriority = 1;
+var UserBlockingPriority = 2;
+var NormalPriority = 3;
+var LowPriority = 4;
+var IdlePriority = 5;
+
+function markTaskErrored(task, ms) {
+}
+
+/* eslint-disable no-var */
+
+var hasPerformanceNow = typeof performance === 'object' && typeof performance.now === 'function';
+
+if (hasPerformanceNow) {
+  var localPerformance = performance;
+
+  exports.unstable_now = function () {
+    return localPerformance.now();
+  };
+} else {
+  var localDate = Date;
+  var initialTime = localDate.now();
+
+  exports.unstable_now = function () {
+    return localDate.now() - initialTime;
+  };
+} // Max 31 bit integer. The max integer size in V8 for 32-bit systems.
+// Math.pow(2, 30) - 1
+// 0b111111111111111111111111111111
+
+
+var maxSigned31BitInt = 1073741823; // Times out immediately
+
+var IMMEDIATE_PRIORITY_TIMEOUT = -1; // Eventually times out
+
+var USER_BLOCKING_PRIORITY_TIMEOUT = 250;
+var NORMAL_PRIORITY_TIMEOUT = 5000;
+var LOW_PRIORITY_TIMEOUT = 10000; // Never times out
+
+var IDLE_PRIORITY_TIMEOUT = maxSigned31BitInt; // Tasks are stored on a min heap
+
+var taskQueue = [];
+var timerQueue = []; // Incrementing id counter. Used to maintain insertion order.
+
+var taskIdCounter = 1; // Pausing the scheduler is useful for debugging.
+var currentTask = null;
+var currentPriorityLevel = NormalPriority; // This is set while performing work, to prevent re-entrance.
+
+var isPerformingWork = false;
+var isHostCallbackScheduled = false;
+var isHostTimeoutScheduled = false; // Capture local references to native APIs, in case a polyfill overrides them.
+
+var localSetTimeout = typeof setTimeout === 'function' ? setTimeout : null;
+var localClearTimeout = typeof clearTimeout === 'function' ? clearTimeout : null;
+var localSetImmediate = typeof setImmediate !== 'undefined' ? setImmediate : null; // IE and Node.js + jsdom
+
+var isInputPending = typeof navigator !== 'undefined' && navigator.scheduling !== undefined && navigator.scheduling.isInputPending !== undefined ? navigator.scheduling.isInputPending.bind(navigator.scheduling) : null;
+
+function advanceTimers(currentTime) {
+  // Check for tasks that are no longer delayed and add them to the queue.
+  var timer = peek(timerQueue);
+
+  while (timer !== null) {
+    if (timer.callback === null) {
+      // Timer was cancelled.
+      pop(timerQueue);
+    } else if (timer.startTime <= currentTime) {
+      // Timer fired. Transfer to the task queue.
+      pop(timerQueue);
+      timer.sortIndex = timer.expirationTime;
+      push(taskQueue, timer);
+    } else {
+      // Remaining timers are pending.
+      return;
+    }
+
+    timer = peek(timerQueue);
+  }
+}
+
+function handleTimeout(currentTime) {
+  isHostTimeoutScheduled = false;
+  advanceTimers(currentTime);
+
+  if (!isHostCallbackScheduled) {
+    if (peek(taskQueue) !== null) {
+      isHostCallbackScheduled = true;
+      requestHostCallback(flushWork);
+    } else {
+      var firstTimer = peek(timerQueue);
+
+      if (firstTimer !== null) {
+        requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
+      }
+    }
+  }
+}
+
+function flushWork(hasTimeRemaining, initialTime) {
+
+
+  isHostCallbackScheduled = false;
+
+  if (isHostTimeoutScheduled) {
+    // We scheduled a timeout but it's no longer needed. Cancel it.
+    isHostTimeoutScheduled = false;
+    cancelHostTimeout();
+  }
+
+  isPerformingWork = true;
+  var previousPriorityLevel = currentPriorityLevel;
+
+  try {
+    if (enableProfiling) {
+      try {
+        return workLoop(hasTimeRemaining, initialTime);
+      } catch (error) {
+        if (currentTask !== null) {
+          var currentTime = exports.unstable_now();
+          markTaskErrored(currentTask, currentTime);
+          currentTask.isQueued = false;
+        }
+
+        throw error;
+      }
+    } else {
+      // No catch in prod code path.
+      return workLoop(hasTimeRemaining, initialTime);
+    }
+  } finally {
+    currentTask = null;
+    currentPriorityLevel = previousPriorityLevel;
+    isPerformingWork = false;
+  }
+}
+
+function workLoop(hasTimeRemaining, initialTime) {
+  var currentTime = initialTime;
+  advanceTimers(currentTime);
+  currentTask = peek(taskQueue);
+
+  while (currentTask !== null && !(enableSchedulerDebugging )) {
+    if (currentTask.expirationTime > currentTime && (!hasTimeRemaining || shouldYieldToHost())) {
+      // This currentTask hasn't expired, and we've reached the deadline.
+      break;
+    }
+
+    var callback = currentTask.callback;
+
+    if (typeof callback === 'function') {
+      currentTask.callback = null;
+      currentPriorityLevel = currentTask.priorityLevel;
+      var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
+
+      var continuationCallback = callback(didUserCallbackTimeout);
+      currentTime = exports.unstable_now();
+
+      if (typeof continuationCallback === 'function') {
+        currentTask.callback = continuationCallback;
+      } else {
+
+        if (currentTask === peek(taskQueue)) {
+          pop(taskQueue);
+        }
+      }
+
+      advanceTimers(currentTime);
+    } else {
+      pop(taskQueue);
+    }
+
+    currentTask = peek(taskQueue);
+  } // Return whether there's additional work
+
+
+  if (currentTask !== null) {
+    return true;
+  } else {
+    var firstTimer = peek(timerQueue);
+
+    if (firstTimer !== null) {
+      requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
+    }
+
+    return false;
+  }
+}
+
+function unstable_runWithPriority(priorityLevel, eventHandler) {
+  switch (priorityLevel) {
+    case ImmediatePriority:
+    case UserBlockingPriority:
+    case NormalPriority:
+    case LowPriority:
+    case IdlePriority:
+      break;
+
+    default:
+      priorityLevel = NormalPriority;
+  }
+
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+
+function unstable_next(eventHandler) {
+  var priorityLevel;
+
+  switch (currentPriorityLevel) {
+    case ImmediatePriority:
+    case UserBlockingPriority:
+    case NormalPriority:
+      // Shift down to normal priority
+      priorityLevel = NormalPriority;
+      break;
+
+    default:
+      // Anything lower than normal priority should remain at the current level.
+      priorityLevel = currentPriorityLevel;
+      break;
+  }
+
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+
+function unstable_wrapCallback(callback) {
+  var parentPriorityLevel = currentPriorityLevel;
+  return function () {
+    // This is a fork of runWithPriority, inlined for performance.
+    var previousPriorityLevel = currentPriorityLevel;
+    currentPriorityLevel = parentPriorityLevel;
+
+    try {
+      return callback.apply(this, arguments);
+    } finally {
+      currentPriorityLevel = previousPriorityLevel;
+    }
+  };
+}
+
+function unstable_scheduleCallback(priorityLevel, callback, options) {
+  var currentTime = exports.unstable_now();
+  var startTime;
+
+  if (typeof options === 'object' && options !== null) {
+    var delay = options.delay;
+
+    if (typeof delay === 'number' && delay > 0) {
+      startTime = currentTime + delay;
+    } else {
+      startTime = currentTime;
+    }
+  } else {
+    startTime = currentTime;
+  }
+
+  var timeout;
+
+  switch (priorityLevel) {
+    case ImmediatePriority:
+      timeout = IMMEDIATE_PRIORITY_TIMEOUT;
+      break;
+
+    case UserBlockingPriority:
+      timeout = USER_BLOCKING_PRIORITY_TIMEOUT;
+      break;
+
+    case IdlePriority:
+      timeout = IDLE_PRIORITY_TIMEOUT;
+      break;
+
+    case LowPriority:
+      timeout = LOW_PRIORITY_TIMEOUT;
+      break;
+
+    case NormalPriority:
+    default:
+      timeout = NORMAL_PRIORITY_TIMEOUT;
+      break;
+  }
+
+  var expirationTime = startTime + timeout;
+  var newTask = {
+    id: taskIdCounter++,
+    callback: callback,
+    priorityLevel: priorityLevel,
+    startTime: startTime,
+    expirationTime: expirationTime,
+    sortIndex: -1
+  };
+
+  if (startTime > currentTime) {
+    // This is a delayed task.
+    newTask.sortIndex = startTime;
+    push(timerQueue, newTask);
+
+    if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
+      // All tasks are delayed, and this is the task with the earliest delay.
+      if (isHostTimeoutScheduled) {
+        // Cancel an existing timeout.
+        cancelHostTimeout();
+      } else {
+        isHostTimeoutScheduled = true;
+      } // Schedule a timeout.
+
+
+      requestHostTimeout(handleTimeout, startTime - currentTime);
+    }
+  } else {
+    newTask.sortIndex = expirationTime;
+    push(taskQueue, newTask);
+    // wait until the next time we yield.
+
+
+    if (!isHostCallbackScheduled && !isPerformingWork) {
+      isHostCallbackScheduled = true;
+      requestHostCallback(flushWork);
+    }
+  }
+
+  return newTask;
+}
+
+function unstable_pauseExecution() {
+}
+
+function unstable_continueExecution() {
+
+  if (!isHostCallbackScheduled && !isPerformingWork) {
+    isHostCallbackScheduled = true;
+    requestHostCallback(flushWork);
+  }
+}
+
+function unstable_getFirstCallbackNode() {
+  return peek(taskQueue);
+}
+
+function unstable_cancelCallback(task) {
+  // remove from the queue because you can't remove arbitrary nodes from an
+  // array based heap, only the first one.)
+
+
+  task.callback = null;
+}
+
+function unstable_getCurrentPriorityLevel() {
+  return currentPriorityLevel;
+}
+
+var isMessageLoopRunning = false;
+var scheduledHostCallback = null;
+var taskTimeoutID = -1; // Scheduler periodically yields in case there is other work on the main
+// thread, like user events. By default, it yields multiple times per frame.
+// It does not attempt to align with frame boundaries, since most tasks don't
+// need to be frame aligned; for those that do, use requestAnimationFrame.
+
+var frameInterval = frameYieldMs;
+var startTime = -1;
+
+function shouldYieldToHost() {
+  var timeElapsed = exports.unstable_now() - startTime;
+
+  if (timeElapsed < frameInterval) {
+    // The main thread has only been blocked for a really short amount of time;
+    // smaller than a single frame. Don't yield yet.
+    return false;
+  } // The main thread has been blocked for a non-negligible amount of time. We
+
+
+  return true;
+}
+
+function requestPaint() {
+
+}
+
+function forceFrameRate(fps) {
+  if (fps < 0 || fps > 125) {
+    // Using console['error'] to evade Babel and ESLint
+    console['error']('forceFrameRate takes a positive int between 0 and 125, ' + 'forcing frame rates higher than 125 fps is not supported');
+    return;
+  }
+
+  if (fps > 0) {
+    frameInterval = Math.floor(1000 / fps);
+  } else {
+    // reset the framerate
+    frameInterval = frameYieldMs;
+  }
+}
+
+var performWorkUntilDeadline = function () {
+  if (scheduledHostCallback !== null) {
+    var currentTime = exports.unstable_now(); // Keep track of the start time so we can measure how long the main thread
+    // has been blocked.
+
+    startTime = currentTime;
+    var hasTimeRemaining = true; // If a scheduler task throws, exit the current browser task so the
+    // error can be observed.
+    //
+    // Intentionally not using a try-catch, since that makes some debugging
+    // techniques harder. Instead, if `scheduledHostCallback` errors, then
+    // `hasMoreWork` will remain true, and we'll continue the work loop.
+
+    var hasMoreWork = true;
+
+    try {
+      hasMoreWork = scheduledHostCallback(hasTimeRemaining, currentTime);
+    } finally {
+      if (hasMoreWork) {
+        // If there's more work, schedule the next message event at the end
+        // of the preceding one.
+        schedulePerformWorkUntilDeadline();
+      } else {
+        isMessageLoopRunning = false;
+        scheduledHostCallback = null;
+      }
+    }
+  } else {
+    isMessageLoopRunning = false;
+  } // Yielding to the browser will give it a chance to paint, so we can
+};
+
+var schedulePerformWorkUntilDeadline;
+
+if (typeof localSetImmediate === 'function') {
+  // Node.js and old IE.
+  // There's a few reasons for why we prefer setImmediate.
+  //
+  // Unlike MessageChannel, it doesn't prevent a Node.js process from exiting.
+  // (Even though this is a DOM fork of the Scheduler, you could get here
+  // with a mix of Node.js 15+, which has a MessageChannel, and jsdom.)
+  // https://github.com/facebook/react/issues/20756
+  //
+  // But also, it runs earlier which is the semantic we want.
+  // If other browsers ever implement it, it's better to use it.
+  // Although both of these would be inferior to native scheduling.
+  schedulePerformWorkUntilDeadline = function () {
+    localSetImmediate(performWorkUntilDeadline);
+  };
+} else if (typeof MessageChannel !== 'undefined') {
+  // DOM and Worker environments.
+  // We prefer MessageChannel because of the 4ms setTimeout clamping.
+  var channel = new MessageChannel();
+  var port = channel.port2;
+  channel.port1.onmessage = performWorkUntilDeadline;
+
+  schedulePerformWorkUntilDeadline = function () {
+    port.postMessage(null);
+  };
+} else {
+  // We should only fallback here in non-browser environments.
+  schedulePerformWorkUntilDeadline = function () {
+    localSetTimeout(performWorkUntilDeadline, 0);
+  };
+}
+
+function requestHostCallback(callback) {
+  scheduledHostCallback = callback;
+
+  if (!isMessageLoopRunning) {
+    isMessageLoopRunning = true;
+    schedulePerformWorkUntilDeadline();
+  }
+}
+
+function requestHostTimeout(callback, ms) {
+  taskTimeoutID = localSetTimeout(function () {
+    callback(exports.unstable_now());
+  }, ms);
+}
+
+function cancelHostTimeout() {
+  localClearTimeout(taskTimeoutID);
+  taskTimeoutID = -1;
+}
+
+var unstable_requestPaint = requestPaint;
+var unstable_Profiling =  null;
+
+exports.unstable_IdlePriority = IdlePriority;
+exports.unstable_ImmediatePriority = ImmediatePriority;
+exports.unstable_LowPriority = LowPriority;
+exports.unstable_NormalPriority = NormalPriority;
+exports.unstable_Profiling = unstable_Profiling;
+exports.unstable_UserBlockingPriority = UserBlockingPriority;
+exports.unstable_cancelCallback = unstable_cancelCallback;
+exports.unstable_continueExecution = unstable_continueExecution;
+exports.unstable_forceFrameRate = forceFrameRate;
+exports.unstable_getCurrentPriorityLevel = unstable_getCurrentPriorityLevel;
+exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
+exports.unstable_next = unstable_next;
+exports.unstable_pauseExecution = unstable_pauseExecution;
+exports.unstable_requestPaint = unstable_requestPaint;
+exports.unstable_runWithPriority = unstable_runWithPriority;
+exports.unstable_scheduleCallback = unstable_scheduleCallback;
+exports.unstable_shouldYield = shouldYieldToHost;
+exports.unstable_wrapCallback = unstable_wrapCallback;
+          /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+if (
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop ===
+    'function'
+) {
+  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+}
+        
+  })();
+}
+
+}).call(this)}).call(this,require('_process'),require("timers").setImmediate)
+},{"_process":9,"timers":26}],15:[function(require,module,exports){
+(function (setImmediate){(function (){
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+'use strict';function f(a,b){var c=a.length;a.push(b);a:for(;0<c;){var d=c-1>>>1,e=a[d];if(0<g(e,b))a[d]=b,a[c]=e,c=d;else break a}}function h(a){return 0===a.length?null:a[0]}function k(a){if(0===a.length)return null;var b=a[0],c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length,w=e>>>1;d<w;){var m=2*(d+1)-1,C=a[m],n=m+1,x=a[n];if(0>g(C,c))n<e&&0>g(x,C)?(a[d]=x,a[n]=c,d=n):(a[d]=C,a[m]=c,d=m);else if(n<e&&0>g(x,c))a[d]=x,a[n]=c,d=n;else break a}}return b}
+function g(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}if("object"===typeof performance&&"function"===typeof performance.now){var l=performance;exports.unstable_now=function(){return l.now()}}else{var p=Date,q=p.now();exports.unstable_now=function(){return p.now()-q}}var r=[],t=[],u=1,v=null,y=3,z=!1,A=!1,B=!1,D="function"===typeof setTimeout?setTimeout:null,E="function"===typeof clearTimeout?clearTimeout:null,F="undefined"!==typeof setImmediate?setImmediate:null;
+"undefined"!==typeof navigator&&void 0!==navigator.scheduling&&void 0!==navigator.scheduling.isInputPending&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function G(a){for(var b=h(t);null!==b;){if(null===b.callback)k(t);else if(b.startTime<=a)k(t),b.sortIndex=b.expirationTime,f(r,b);else break;b=h(t)}}function H(a){B=!1;G(a);if(!A)if(null!==h(r))A=!0,I(J);else{var b=h(t);null!==b&&K(H,b.startTime-a)}}
+function J(a,b){A=!1;B&&(B=!1,E(L),L=-1);z=!0;var c=y;try{G(b);for(v=h(r);null!==v&&(!(v.expirationTime>b)||a&&!M());){var d=v.callback;if("function"===typeof d){v.callback=null;y=v.priorityLevel;var e=d(v.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?v.callback=e:v===h(r)&&k(r);G(b)}else k(r);v=h(r)}if(null!==v)var w=!0;else{var m=h(t);null!==m&&K(H,m.startTime-b);w=!1}return w}finally{v=null,y=c,z=!1}}var N=!1,O=null,L=-1,P=5,Q=-1;
+function M(){return exports.unstable_now()-Q<P?!1:!0}function R(){if(null!==O){var a=exports.unstable_now();Q=a;var b=!0;try{b=O(!0,a)}finally{b?S():(N=!1,O=null)}}else N=!1}var S;if("function"===typeof F)S=function(){F(R)};else if("undefined"!==typeof MessageChannel){var T=new MessageChannel,U=T.port2;T.port1.onmessage=R;S=function(){U.postMessage(null)}}else S=function(){D(R,0)};function I(a){O=a;N||(N=!0,S())}function K(a,b){L=D(function(){a(exports.unstable_now())},b)}
+exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){A||z||(A=!0,I(J))};
+exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):P=0<a?Math.floor(1E3/a):5};exports.unstable_getCurrentPriorityLevel=function(){return y};exports.unstable_getFirstCallbackNode=function(){return h(r)};exports.unstable_next=function(a){switch(y){case 1:case 2:case 3:var b=3;break;default:b=y}var c=y;y=b;try{return a()}finally{y=c}};exports.unstable_pauseExecution=function(){};
+exports.unstable_requestPaint=function(){};exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=y;y=a;try{return b()}finally{y=c}};
+exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:u++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,f(t,a),null===h(r)&&a===h(t)&&(B?(E(L),L=-1):B=!0,K(H,c-d))):(a.sortIndex=e,f(r,a),A||z||(A=!0,I(J)));return a};
+exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
+
+}).call(this)}).call(this,require("timers").setImmediate)
+},{"timers":26}],16:[function(require,module,exports){
+(function (process){(function (){
+'use strict';
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./cjs/scheduler.production.min.js');
+} else {
+  module.exports = require('./cjs/scheduler.development.js');
+}
+
+}).call(this)}).call(this,require('_process'))
+},{"./cjs/scheduler.development.js":14,"./cjs/scheduler.production.min.js":15,"_process":9}],17:[function(require,module,exports){
 (function (process){(function (){
 /**
  * @license React
@@ -32114,7 +32789,7 @@ exports.jsxs = jsxs;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":9,"react":18}],15:[function(require,module,exports){
+},{"_process":9,"react":21}],18:[function(require,module,exports){
 /**
  * @license React
  * react-jsx-runtime.production.min.js
@@ -32127,7 +32802,7 @@ exports.jsxs = jsxs;
 'use strict';var f=require("react"),k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
 function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return{$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}exports.Fragment=l;exports.jsx=q;exports.jsxs=q;
 
-},{"react":18}],16:[function(require,module,exports){
+},{"react":21}],19:[function(require,module,exports){
 (function (process){(function (){
 /**
  * @license React
@@ -34870,7 +35545,7 @@ if (
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":9}],17:[function(require,module,exports){
+},{"_process":9}],20:[function(require,module,exports){
 /**
  * @license React
  * react.production.min.js
@@ -34898,7 +35573,7 @@ exports.useCallback=function(a,b){return U.current.useCallback(a,b)};exports.use
 exports.useInsertionEffect=function(a,b){return U.current.useInsertionEffect(a,b)};exports.useLayoutEffect=function(a,b){return U.current.useLayoutEffect(a,b)};exports.useMemo=function(a,b){return U.current.useMemo(a,b)};exports.useReducer=function(a,b,e){return U.current.useReducer(a,b,e)};exports.useRef=function(a){return U.current.useRef(a)};exports.useState=function(a){return U.current.useState(a)};exports.useSyncExternalStore=function(a,b,e){return U.current.useSyncExternalStore(a,b,e)};
 exports.useTransition=function(){return U.current.useTransition()};exports.version="18.2.0";
 
-},{}],18:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -34909,7 +35584,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react.development.js":16,"./cjs/react.production.min.js":17,"_process":9}],19:[function(require,module,exports){
+},{"./cjs/react.development.js":19,"./cjs/react.production.min.js":20,"_process":9}],22:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -34920,679 +35595,730 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react-jsx-runtime.development.js":14,"./cjs/react-jsx-runtime.production.min.js":15,"_process":9}],20:[function(require,module,exports){
+},{"./cjs/react-jsx-runtime.development.js":17,"./cjs/react-jsx-runtime.production.min.js":18,"_process":9}],23:[function(require,module,exports){
 (function (process,setImmediate){(function (){
 /**
  * @license React
  * scheduler.development.js
  *
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+"use strict";
+"production" !== process.env.NODE_ENV &&
+  (function () {
+    function performWorkUntilDeadline() {
+      needsPaint = !1;
+      if (isMessageLoopRunning) {
+        var currentTime = exports.unstable_now();
+        startTime = currentTime;
+        var hasMoreWork = !0;
+        try {
+          a: {
+            isHostCallbackScheduled = !1;
+            isHostTimeoutScheduled &&
+              ((isHostTimeoutScheduled = !1),
+              localClearTimeout(taskTimeoutID),
+              (taskTimeoutID = -1));
+            isPerformingWork = !0;
+            var previousPriorityLevel = currentPriorityLevel;
+            try {
+              b: {
+                advanceTimers(currentTime);
+                for (
+                  currentTask = peek(taskQueue);
+                  null !== currentTask &&
+                  !(
+                    currentTask.expirationTime > currentTime &&
+                    shouldYieldToHost()
+                  );
 
-if (process.env.NODE_ENV !== "production") {
-  (function() {
+                ) {
+                  var callback = currentTask.callback;
+                  if ("function" === typeof callback) {
+                    currentTask.callback = null;
+                    currentPriorityLevel = currentTask.priorityLevel;
+                    var continuationCallback = callback(
+                      currentTask.expirationTime <= currentTime
+                    );
+                    currentTime = exports.unstable_now();
+                    if ("function" === typeof continuationCallback) {
+                      currentTask.callback = continuationCallback;
+                      advanceTimers(currentTime);
+                      hasMoreWork = !0;
+                      break b;
+                    }
+                    currentTask === peek(taskQueue) && pop(taskQueue);
+                    advanceTimers(currentTime);
+                  } else pop(taskQueue);
+                  currentTask = peek(taskQueue);
+                }
+                if (null !== currentTask) hasMoreWork = !0;
+                else {
+                  var firstTimer = peek(timerQueue);
+                  null !== firstTimer &&
+                    requestHostTimeout(
+                      handleTimeout,
+                      firstTimer.startTime - currentTime
+                    );
+                  hasMoreWork = !1;
+                }
+              }
+              break a;
+            } finally {
+              (currentTask = null),
+                (currentPriorityLevel = previousPriorityLevel),
+                (isPerformingWork = !1);
+            }
+            hasMoreWork = void 0;
+          }
+        } finally {
+          hasMoreWork
+            ? schedulePerformWorkUntilDeadline()
+            : (isMessageLoopRunning = !1);
+        }
+      }
+    }
+    function push(heap, node) {
+      var index = heap.length;
+      heap.push(node);
+      a: for (; 0 < index; ) {
+        var parentIndex = (index - 1) >>> 1,
+          parent = heap[parentIndex];
+        if (0 < compare(parent, node))
+          (heap[parentIndex] = node),
+            (heap[index] = parent),
+            (index = parentIndex);
+        else break a;
+      }
+    }
+    function peek(heap) {
+      return 0 === heap.length ? null : heap[0];
+    }
+    function pop(heap) {
+      if (0 === heap.length) return null;
+      var first = heap[0],
+        last = heap.pop();
+      if (last !== first) {
+        heap[0] = last;
+        a: for (
+          var index = 0, length = heap.length, halfLength = length >>> 1;
+          index < halfLength;
 
-          'use strict';
+        ) {
+          var leftIndex = 2 * (index + 1) - 1,
+            left = heap[leftIndex],
+            rightIndex = leftIndex + 1,
+            right = heap[rightIndex];
+          if (0 > compare(left, last))
+            rightIndex < length && 0 > compare(right, left)
+              ? ((heap[index] = right),
+                (heap[rightIndex] = last),
+                (index = rightIndex))
+              : ((heap[index] = left),
+                (heap[leftIndex] = last),
+                (index = leftIndex));
+          else if (rightIndex < length && 0 > compare(right, last))
+            (heap[index] = right),
+              (heap[rightIndex] = last),
+              (index = rightIndex);
+          else break a;
+        }
+      }
+      return first;
+    }
+    function compare(a, b) {
+      var diff = a.sortIndex - b.sortIndex;
+      return 0 !== diff ? diff : a.id - b.id;
+    }
+    function advanceTimers(currentTime) {
+      for (var timer = peek(timerQueue); null !== timer; ) {
+        if (null === timer.callback) pop(timerQueue);
+        else if (timer.startTime <= currentTime)
+          pop(timerQueue),
+            (timer.sortIndex = timer.expirationTime),
+            push(taskQueue, timer);
+        else break;
+        timer = peek(timerQueue);
+      }
+    }
+    function handleTimeout(currentTime) {
+      isHostTimeoutScheduled = !1;
+      advanceTimers(currentTime);
+      if (!isHostCallbackScheduled)
+        if (null !== peek(taskQueue))
+          (isHostCallbackScheduled = !0),
+            isMessageLoopRunning ||
+              ((isMessageLoopRunning = !0), schedulePerformWorkUntilDeadline());
+        else {
+          var firstTimer = peek(timerQueue);
+          null !== firstTimer &&
+            requestHostTimeout(
+              handleTimeout,
+              firstTimer.startTime - currentTime
+            );
+        }
+    }
+    function shouldYieldToHost() {
+      return needsPaint
+        ? !0
+        : exports.unstable_now() - startTime < frameInterval
+          ? !1
+          : !0;
+    }
+    function requestHostTimeout(callback, ms) {
+      taskTimeoutID = localSetTimeout(function () {
+        callback(exports.unstable_now());
+      }, ms);
+    }
+    "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ &&
+      "function" ===
+        typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart &&
+      __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
+    exports.unstable_now = void 0;
+    if (
+      "object" === typeof performance &&
+      "function" === typeof performance.now
+    ) {
+      var localPerformance = performance;
+      exports.unstable_now = function () {
+        return localPerformance.now();
+      };
+    } else {
+      var localDate = Date,
+        initialTime = localDate.now();
+      exports.unstable_now = function () {
+        return localDate.now() - initialTime;
+      };
+    }
+    var taskQueue = [],
+      timerQueue = [],
+      taskIdCounter = 1,
+      currentTask = null,
+      currentPriorityLevel = 3,
+      isPerformingWork = !1,
+      isHostCallbackScheduled = !1,
+      isHostTimeoutScheduled = !1,
+      needsPaint = !1,
+      localSetTimeout = "function" === typeof setTimeout ? setTimeout : null,
+      localClearTimeout =
+        "function" === typeof clearTimeout ? clearTimeout : null,
+      localSetImmediate =
+        "undefined" !== typeof setImmediate ? setImmediate : null,
+      isMessageLoopRunning = !1,
+      taskTimeoutID = -1,
+      frameInterval = 5,
+      startTime = -1;
+    if ("function" === typeof localSetImmediate)
+      var schedulePerformWorkUntilDeadline = function () {
+        localSetImmediate(performWorkUntilDeadline);
+      };
+    else if ("undefined" !== typeof MessageChannel) {
+      var channel = new MessageChannel(),
+        port = channel.port2;
+      channel.port1.onmessage = performWorkUntilDeadline;
+      schedulePerformWorkUntilDeadline = function () {
+        port.postMessage(null);
+      };
+    } else
+      schedulePerformWorkUntilDeadline = function () {
+        localSetTimeout(performWorkUntilDeadline, 0);
+      };
+    exports.unstable_IdlePriority = 5;
+    exports.unstable_ImmediatePriority = 1;
+    exports.unstable_LowPriority = 4;
+    exports.unstable_NormalPriority = 3;
+    exports.unstable_Profiling = null;
+    exports.unstable_UserBlockingPriority = 2;
+    exports.unstable_cancelCallback = function (task) {
+      task.callback = null;
+    };
+    exports.unstable_forceFrameRate = function (fps) {
+      0 > fps || 125 < fps
+        ? console.error(
+            "forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"
+          )
+        : (frameInterval = 0 < fps ? Math.floor(1e3 / fps) : 5);
+    };
+    exports.unstable_getCurrentPriorityLevel = function () {
+      return currentPriorityLevel;
+    };
+    exports.unstable_next = function (eventHandler) {
+      switch (currentPriorityLevel) {
+        case 1:
+        case 2:
+        case 3:
+          var priorityLevel = 3;
+          break;
+        default:
+          priorityLevel = currentPriorityLevel;
+      }
+      var previousPriorityLevel = currentPriorityLevel;
+      currentPriorityLevel = priorityLevel;
+      try {
+        return eventHandler();
+      } finally {
+        currentPriorityLevel = previousPriorityLevel;
+      }
+    };
+    exports.unstable_requestPaint = function () {
+      needsPaint = !0;
+    };
+    exports.unstable_runWithPriority = function (priorityLevel, eventHandler) {
+      switch (priorityLevel) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+          break;
+        default:
+          priorityLevel = 3;
+      }
+      var previousPriorityLevel = currentPriorityLevel;
+      currentPriorityLevel = priorityLevel;
+      try {
+        return eventHandler();
+      } finally {
+        currentPriorityLevel = previousPriorityLevel;
+      }
+    };
+    exports.unstable_scheduleCallback = function (
+      priorityLevel,
+      callback,
+      options
+    ) {
+      var currentTime = exports.unstable_now();
+      "object" === typeof options && null !== options
+        ? ((options = options.delay),
+          (options =
+            "number" === typeof options && 0 < options
+              ? currentTime + options
+              : currentTime))
+        : (options = currentTime);
+      switch (priorityLevel) {
+        case 1:
+          var timeout = -1;
+          break;
+        case 2:
+          timeout = 250;
+          break;
+        case 5:
+          timeout = 1073741823;
+          break;
+        case 4:
+          timeout = 1e4;
+          break;
+        default:
+          timeout = 5e3;
+      }
+      timeout = options + timeout;
+      priorityLevel = {
+        id: taskIdCounter++,
+        callback: callback,
+        priorityLevel: priorityLevel,
+        startTime: options,
+        expirationTime: timeout,
+        sortIndex: -1
+      };
+      options > currentTime
+        ? ((priorityLevel.sortIndex = options),
+          push(timerQueue, priorityLevel),
+          null === peek(taskQueue) &&
+            priorityLevel === peek(timerQueue) &&
+            (isHostTimeoutScheduled
+              ? (localClearTimeout(taskTimeoutID), (taskTimeoutID = -1))
+              : (isHostTimeoutScheduled = !0),
+            requestHostTimeout(handleTimeout, options - currentTime)))
+        : ((priorityLevel.sortIndex = timeout),
+          push(taskQueue, priorityLevel),
+          isHostCallbackScheduled ||
+            isPerformingWork ||
+            ((isHostCallbackScheduled = !0),
+            isMessageLoopRunning ||
+              ((isMessageLoopRunning = !0),
+              schedulePerformWorkUntilDeadline())));
+      return priorityLevel;
+    };
+    exports.unstable_shouldYield = shouldYieldToHost;
+    exports.unstable_wrapCallback = function (callback) {
+      var parentPriorityLevel = currentPriorityLevel;
+      return function () {
+        var previousPriorityLevel = currentPriorityLevel;
+        currentPriorityLevel = parentPriorityLevel;
+        try {
+          return callback.apply(this, arguments);
+        } finally {
+          currentPriorityLevel = previousPriorityLevel;
+        }
+      };
+    };
+    "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ &&
+      "function" ===
+        typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop &&
+      __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
+  })();
 
-/* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-if (
-  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
-  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart ===
-    'function'
-) {
-  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-}
-          var enableSchedulerDebugging = false;
-var enableProfiling = false;
-var frameYieldMs = 5;
+}).call(this)}).call(this,require('_process'),require("timers").setImmediate)
+},{"_process":9,"timers":26}],24:[function(require,module,exports){
+(function (setImmediate){(function (){
+/**
+ * @license React
+ * scheduler.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
+"use strict";
 function push(heap, node) {
   var index = heap.length;
   heap.push(node);
-  siftUp(heap, node, index);
+  a: for (; 0 < index; ) {
+    var parentIndex = (index - 1) >>> 1,
+      parent = heap[parentIndex];
+    if (0 < compare(parent, node))
+      (heap[parentIndex] = node), (heap[index] = parent), (index = parentIndex);
+    else break a;
+  }
 }
 function peek(heap) {
-  return heap.length === 0 ? null : heap[0];
+  return 0 === heap.length ? null : heap[0];
 }
 function pop(heap) {
-  if (heap.length === 0) {
-    return null;
-  }
-
-  var first = heap[0];
-  var last = heap.pop();
-
+  if (0 === heap.length) return null;
+  var first = heap[0],
+    last = heap.pop();
   if (last !== first) {
     heap[0] = last;
-    siftDown(heap, last, 0);
-  }
+    a: for (
+      var index = 0, length = heap.length, halfLength = length >>> 1;
+      index < halfLength;
 
+    ) {
+      var leftIndex = 2 * (index + 1) - 1,
+        left = heap[leftIndex],
+        rightIndex = leftIndex + 1,
+        right = heap[rightIndex];
+      if (0 > compare(left, last))
+        rightIndex < length && 0 > compare(right, left)
+          ? ((heap[index] = right),
+            (heap[rightIndex] = last),
+            (index = rightIndex))
+          : ((heap[index] = left),
+            (heap[leftIndex] = last),
+            (index = leftIndex));
+      else if (rightIndex < length && 0 > compare(right, last))
+        (heap[index] = right), (heap[rightIndex] = last), (index = rightIndex);
+      else break a;
+    }
+  }
   return first;
 }
-
-function siftUp(heap, node, i) {
-  var index = i;
-
-  while (index > 0) {
-    var parentIndex = index - 1 >>> 1;
-    var parent = heap[parentIndex];
-
-    if (compare(parent, node) > 0) {
-      // The parent is larger. Swap positions.
-      heap[parentIndex] = node;
-      heap[index] = parent;
-      index = parentIndex;
-    } else {
-      // The parent is smaller. Exit.
-      return;
-    }
-  }
-}
-
-function siftDown(heap, node, i) {
-  var index = i;
-  var length = heap.length;
-  var halfLength = length >>> 1;
-
-  while (index < halfLength) {
-    var leftIndex = (index + 1) * 2 - 1;
-    var left = heap[leftIndex];
-    var rightIndex = leftIndex + 1;
-    var right = heap[rightIndex]; // If the left or right node is smaller, swap with the smaller of those.
-
-    if (compare(left, node) < 0) {
-      if (rightIndex < length && compare(right, left) < 0) {
-        heap[index] = right;
-        heap[rightIndex] = node;
-        index = rightIndex;
-      } else {
-        heap[index] = left;
-        heap[leftIndex] = node;
-        index = leftIndex;
-      }
-    } else if (rightIndex < length && compare(right, node) < 0) {
-      heap[index] = right;
-      heap[rightIndex] = node;
-      index = rightIndex;
-    } else {
-      // Neither child is smaller. Exit.
-      return;
-    }
-  }
-}
-
 function compare(a, b) {
-  // Compare sort index first, then task id.
   var diff = a.sortIndex - b.sortIndex;
-  return diff !== 0 ? diff : a.id - b.id;
+  return 0 !== diff ? diff : a.id - b.id;
 }
-
-// TODO: Use symbols?
-var ImmediatePriority = 1;
-var UserBlockingPriority = 2;
-var NormalPriority = 3;
-var LowPriority = 4;
-var IdlePriority = 5;
-
-function markTaskErrored(task, ms) {
-}
-
-/* eslint-disable no-var */
-
-var hasPerformanceNow = typeof performance === 'object' && typeof performance.now === 'function';
-
-if (hasPerformanceNow) {
+exports.unstable_now = void 0;
+if ("object" === typeof performance && "function" === typeof performance.now) {
   var localPerformance = performance;
-
   exports.unstable_now = function () {
     return localPerformance.now();
   };
 } else {
-  var localDate = Date;
-  var initialTime = localDate.now();
-
+  var localDate = Date,
+    initialTime = localDate.now();
   exports.unstable_now = function () {
     return localDate.now() - initialTime;
   };
-} // Max 31 bit integer. The max integer size in V8 for 32-bit systems.
-// Math.pow(2, 30) - 1
-// 0b111111111111111111111111111111
-
-
-var maxSigned31BitInt = 1073741823; // Times out immediately
-
-var IMMEDIATE_PRIORITY_TIMEOUT = -1; // Eventually times out
-
-var USER_BLOCKING_PRIORITY_TIMEOUT = 250;
-var NORMAL_PRIORITY_TIMEOUT = 5000;
-var LOW_PRIORITY_TIMEOUT = 10000; // Never times out
-
-var IDLE_PRIORITY_TIMEOUT = maxSigned31BitInt; // Tasks are stored on a min heap
-
-var taskQueue = [];
-var timerQueue = []; // Incrementing id counter. Used to maintain insertion order.
-
-var taskIdCounter = 1; // Pausing the scheduler is useful for debugging.
-var currentTask = null;
-var currentPriorityLevel = NormalPriority; // This is set while performing work, to prevent re-entrance.
-
-var isPerformingWork = false;
-var isHostCallbackScheduled = false;
-var isHostTimeoutScheduled = false; // Capture local references to native APIs, in case a polyfill overrides them.
-
-var localSetTimeout = typeof setTimeout === 'function' ? setTimeout : null;
-var localClearTimeout = typeof clearTimeout === 'function' ? clearTimeout : null;
-var localSetImmediate = typeof setImmediate !== 'undefined' ? setImmediate : null; // IE and Node.js + jsdom
-
-var isInputPending = typeof navigator !== 'undefined' && navigator.scheduling !== undefined && navigator.scheduling.isInputPending !== undefined ? navigator.scheduling.isInputPending.bind(navigator.scheduling) : null;
-
+}
+var taskQueue = [],
+  timerQueue = [],
+  taskIdCounter = 1,
+  currentTask = null,
+  currentPriorityLevel = 3,
+  isPerformingWork = !1,
+  isHostCallbackScheduled = !1,
+  isHostTimeoutScheduled = !1,
+  needsPaint = !1,
+  localSetTimeout = "function" === typeof setTimeout ? setTimeout : null,
+  localClearTimeout = "function" === typeof clearTimeout ? clearTimeout : null,
+  localSetImmediate = "undefined" !== typeof setImmediate ? setImmediate : null;
 function advanceTimers(currentTime) {
-  // Check for tasks that are no longer delayed and add them to the queue.
-  var timer = peek(timerQueue);
-
-  while (timer !== null) {
-    if (timer.callback === null) {
-      // Timer was cancelled.
-      pop(timerQueue);
-    } else if (timer.startTime <= currentTime) {
-      // Timer fired. Transfer to the task queue.
-      pop(timerQueue);
-      timer.sortIndex = timer.expirationTime;
-      push(taskQueue, timer);
-    } else {
-      // Remaining timers are pending.
-      return;
-    }
-
+  for (var timer = peek(timerQueue); null !== timer; ) {
+    if (null === timer.callback) pop(timerQueue);
+    else if (timer.startTime <= currentTime)
+      pop(timerQueue),
+        (timer.sortIndex = timer.expirationTime),
+        push(taskQueue, timer);
+    else break;
     timer = peek(timerQueue);
   }
 }
-
 function handleTimeout(currentTime) {
-  isHostTimeoutScheduled = false;
+  isHostTimeoutScheduled = !1;
   advanceTimers(currentTime);
-
-  if (!isHostCallbackScheduled) {
-    if (peek(taskQueue) !== null) {
-      isHostCallbackScheduled = true;
-      requestHostCallback(flushWork);
-    } else {
+  if (!isHostCallbackScheduled)
+    if (null !== peek(taskQueue))
+      (isHostCallbackScheduled = !0),
+        isMessageLoopRunning ||
+          ((isMessageLoopRunning = !0), schedulePerformWorkUntilDeadline());
+    else {
       var firstTimer = peek(timerQueue);
-
-      if (firstTimer !== null) {
+      null !== firstTimer &&
         requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
-      }
     }
-  }
 }
+var isMessageLoopRunning = !1,
+  taskTimeoutID = -1,
+  frameInterval = 5,
+  startTime = -1;
+function shouldYieldToHost() {
+  return needsPaint
+    ? !0
+    : exports.unstable_now() - startTime < frameInterval
+      ? !1
+      : !0;
+}
+function performWorkUntilDeadline() {
+  needsPaint = !1;
+  if (isMessageLoopRunning) {
+    var currentTime = exports.unstable_now();
+    startTime = currentTime;
+    var hasMoreWork = !0;
+    try {
+      a: {
+        isHostCallbackScheduled = !1;
+        isHostTimeoutScheduled &&
+          ((isHostTimeoutScheduled = !1),
+          localClearTimeout(taskTimeoutID),
+          (taskTimeoutID = -1));
+        isPerformingWork = !0;
+        var previousPriorityLevel = currentPriorityLevel;
+        try {
+          b: {
+            advanceTimers(currentTime);
+            for (
+              currentTask = peek(taskQueue);
+              null !== currentTask &&
+              !(
+                currentTask.expirationTime > currentTime && shouldYieldToHost()
+              );
 
-function flushWork(hasTimeRemaining, initialTime) {
-
-
-  isHostCallbackScheduled = false;
-
-  if (isHostTimeoutScheduled) {
-    // We scheduled a timeout but it's no longer needed. Cancel it.
-    isHostTimeoutScheduled = false;
-    cancelHostTimeout();
-  }
-
-  isPerformingWork = true;
-  var previousPriorityLevel = currentPriorityLevel;
-
-  try {
-    if (enableProfiling) {
-      try {
-        return workLoop(hasTimeRemaining, initialTime);
-      } catch (error) {
-        if (currentTask !== null) {
-          var currentTime = exports.unstable_now();
-          markTaskErrored(currentTask, currentTime);
-          currentTask.isQueued = false;
+            ) {
+              var callback = currentTask.callback;
+              if ("function" === typeof callback) {
+                currentTask.callback = null;
+                currentPriorityLevel = currentTask.priorityLevel;
+                var continuationCallback = callback(
+                  currentTask.expirationTime <= currentTime
+                );
+                currentTime = exports.unstable_now();
+                if ("function" === typeof continuationCallback) {
+                  currentTask.callback = continuationCallback;
+                  advanceTimers(currentTime);
+                  hasMoreWork = !0;
+                  break b;
+                }
+                currentTask === peek(taskQueue) && pop(taskQueue);
+                advanceTimers(currentTime);
+              } else pop(taskQueue);
+              currentTask = peek(taskQueue);
+            }
+            if (null !== currentTask) hasMoreWork = !0;
+            else {
+              var firstTimer = peek(timerQueue);
+              null !== firstTimer &&
+                requestHostTimeout(
+                  handleTimeout,
+                  firstTimer.startTime - currentTime
+                );
+              hasMoreWork = !1;
+            }
+          }
+          break a;
+        } finally {
+          (currentTask = null),
+            (currentPriorityLevel = previousPriorityLevel),
+            (isPerformingWork = !1);
         }
-
-        throw error;
+        hasMoreWork = void 0;
       }
-    } else {
-      // No catch in prod code path.
-      return workLoop(hasTimeRemaining, initialTime);
+    } finally {
+      hasMoreWork
+        ? schedulePerformWorkUntilDeadline()
+        : (isMessageLoopRunning = !1);
     }
-  } finally {
-    currentTask = null;
-    currentPriorityLevel = previousPriorityLevel;
-    isPerformingWork = false;
   }
 }
-
-function workLoop(hasTimeRemaining, initialTime) {
-  var currentTime = initialTime;
-  advanceTimers(currentTime);
-  currentTask = peek(taskQueue);
-
-  while (currentTask !== null && !(enableSchedulerDebugging )) {
-    if (currentTask.expirationTime > currentTime && (!hasTimeRemaining || shouldYieldToHost())) {
-      // This currentTask hasn't expired, and we've reached the deadline.
-      break;
-    }
-
-    var callback = currentTask.callback;
-
-    if (typeof callback === 'function') {
-      currentTask.callback = null;
-      currentPriorityLevel = currentTask.priorityLevel;
-      var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
-
-      var continuationCallback = callback(didUserCallbackTimeout);
-      currentTime = exports.unstable_now();
-
-      if (typeof continuationCallback === 'function') {
-        currentTask.callback = continuationCallback;
-      } else {
-
-        if (currentTask === peek(taskQueue)) {
-          pop(taskQueue);
-        }
-      }
-
-      advanceTimers(currentTime);
-    } else {
-      pop(taskQueue);
-    }
-
-    currentTask = peek(taskQueue);
-  } // Return whether there's additional work
-
-
-  if (currentTask !== null) {
-    return true;
-  } else {
-    var firstTimer = peek(timerQueue);
-
-    if (firstTimer !== null) {
-      requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
-    }
-
-    return false;
-  }
+var schedulePerformWorkUntilDeadline;
+if ("function" === typeof localSetImmediate)
+  schedulePerformWorkUntilDeadline = function () {
+    localSetImmediate(performWorkUntilDeadline);
+  };
+else if ("undefined" !== typeof MessageChannel) {
+  var channel = new MessageChannel(),
+    port = channel.port2;
+  channel.port1.onmessage = performWorkUntilDeadline;
+  schedulePerformWorkUntilDeadline = function () {
+    port.postMessage(null);
+  };
+} else
+  schedulePerformWorkUntilDeadline = function () {
+    localSetTimeout(performWorkUntilDeadline, 0);
+  };
+function requestHostTimeout(callback, ms) {
+  taskTimeoutID = localSetTimeout(function () {
+    callback(exports.unstable_now());
+  }, ms);
 }
-
-function unstable_runWithPriority(priorityLevel, eventHandler) {
-  switch (priorityLevel) {
-    case ImmediatePriority:
-    case UserBlockingPriority:
-    case NormalPriority:
-    case LowPriority:
-    case IdlePriority:
-      break;
-
-    default:
-      priorityLevel = NormalPriority;
-  }
-
-  var previousPriorityLevel = currentPriorityLevel;
-  currentPriorityLevel = priorityLevel;
-
-  try {
-    return eventHandler();
-  } finally {
-    currentPriorityLevel = previousPriorityLevel;
-  }
-}
-
-function unstable_next(eventHandler) {
-  var priorityLevel;
-
+exports.unstable_IdlePriority = 5;
+exports.unstable_ImmediatePriority = 1;
+exports.unstable_LowPriority = 4;
+exports.unstable_NormalPriority = 3;
+exports.unstable_Profiling = null;
+exports.unstable_UserBlockingPriority = 2;
+exports.unstable_cancelCallback = function (task) {
+  task.callback = null;
+};
+exports.unstable_forceFrameRate = function (fps) {
+  0 > fps || 125 < fps
+    ? console.error(
+        "forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"
+      )
+    : (frameInterval = 0 < fps ? Math.floor(1e3 / fps) : 5);
+};
+exports.unstable_getCurrentPriorityLevel = function () {
+  return currentPriorityLevel;
+};
+exports.unstable_next = function (eventHandler) {
   switch (currentPriorityLevel) {
-    case ImmediatePriority:
-    case UserBlockingPriority:
-    case NormalPriority:
-      // Shift down to normal priority
-      priorityLevel = NormalPriority;
+    case 1:
+    case 2:
+    case 3:
+      var priorityLevel = 3;
       break;
-
     default:
-      // Anything lower than normal priority should remain at the current level.
       priorityLevel = currentPriorityLevel;
-      break;
   }
-
   var previousPriorityLevel = currentPriorityLevel;
   currentPriorityLevel = priorityLevel;
-
   try {
     return eventHandler();
   } finally {
     currentPriorityLevel = previousPriorityLevel;
   }
-}
-
-function unstable_wrapCallback(callback) {
+};
+exports.unstable_requestPaint = function () {
+  needsPaint = !0;
+};
+exports.unstable_runWithPriority = function (priorityLevel, eventHandler) {
+  switch (priorityLevel) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      break;
+    default:
+      priorityLevel = 3;
+  }
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+};
+exports.unstable_scheduleCallback = function (
+  priorityLevel,
+  callback,
+  options
+) {
+  var currentTime = exports.unstable_now();
+  "object" === typeof options && null !== options
+    ? ((options = options.delay),
+      (options =
+        "number" === typeof options && 0 < options
+          ? currentTime + options
+          : currentTime))
+    : (options = currentTime);
+  switch (priorityLevel) {
+    case 1:
+      var timeout = -1;
+      break;
+    case 2:
+      timeout = 250;
+      break;
+    case 5:
+      timeout = 1073741823;
+      break;
+    case 4:
+      timeout = 1e4;
+      break;
+    default:
+      timeout = 5e3;
+  }
+  timeout = options + timeout;
+  priorityLevel = {
+    id: taskIdCounter++,
+    callback: callback,
+    priorityLevel: priorityLevel,
+    startTime: options,
+    expirationTime: timeout,
+    sortIndex: -1
+  };
+  options > currentTime
+    ? ((priorityLevel.sortIndex = options),
+      push(timerQueue, priorityLevel),
+      null === peek(taskQueue) &&
+        priorityLevel === peek(timerQueue) &&
+        (isHostTimeoutScheduled
+          ? (localClearTimeout(taskTimeoutID), (taskTimeoutID = -1))
+          : (isHostTimeoutScheduled = !0),
+        requestHostTimeout(handleTimeout, options - currentTime)))
+    : ((priorityLevel.sortIndex = timeout),
+      push(taskQueue, priorityLevel),
+      isHostCallbackScheduled ||
+        isPerformingWork ||
+        ((isHostCallbackScheduled = !0),
+        isMessageLoopRunning ||
+          ((isMessageLoopRunning = !0), schedulePerformWorkUntilDeadline())));
+  return priorityLevel;
+};
+exports.unstable_shouldYield = shouldYieldToHost;
+exports.unstable_wrapCallback = function (callback) {
   var parentPriorityLevel = currentPriorityLevel;
   return function () {
-    // This is a fork of runWithPriority, inlined for performance.
     var previousPriorityLevel = currentPriorityLevel;
     currentPriorityLevel = parentPriorityLevel;
-
     try {
       return callback.apply(this, arguments);
     } finally {
       currentPriorityLevel = previousPriorityLevel;
     }
   };
-}
-
-function unstable_scheduleCallback(priorityLevel, callback, options) {
-  var currentTime = exports.unstable_now();
-  var startTime;
-
-  if (typeof options === 'object' && options !== null) {
-    var delay = options.delay;
-
-    if (typeof delay === 'number' && delay > 0) {
-      startTime = currentTime + delay;
-    } else {
-      startTime = currentTime;
-    }
-  } else {
-    startTime = currentTime;
-  }
-
-  var timeout;
-
-  switch (priorityLevel) {
-    case ImmediatePriority:
-      timeout = IMMEDIATE_PRIORITY_TIMEOUT;
-      break;
-
-    case UserBlockingPriority:
-      timeout = USER_BLOCKING_PRIORITY_TIMEOUT;
-      break;
-
-    case IdlePriority:
-      timeout = IDLE_PRIORITY_TIMEOUT;
-      break;
-
-    case LowPriority:
-      timeout = LOW_PRIORITY_TIMEOUT;
-      break;
-
-    case NormalPriority:
-    default:
-      timeout = NORMAL_PRIORITY_TIMEOUT;
-      break;
-  }
-
-  var expirationTime = startTime + timeout;
-  var newTask = {
-    id: taskIdCounter++,
-    callback: callback,
-    priorityLevel: priorityLevel,
-    startTime: startTime,
-    expirationTime: expirationTime,
-    sortIndex: -1
-  };
-
-  if (startTime > currentTime) {
-    // This is a delayed task.
-    newTask.sortIndex = startTime;
-    push(timerQueue, newTask);
-
-    if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
-      // All tasks are delayed, and this is the task with the earliest delay.
-      if (isHostTimeoutScheduled) {
-        // Cancel an existing timeout.
-        cancelHostTimeout();
-      } else {
-        isHostTimeoutScheduled = true;
-      } // Schedule a timeout.
-
-
-      requestHostTimeout(handleTimeout, startTime - currentTime);
-    }
-  } else {
-    newTask.sortIndex = expirationTime;
-    push(taskQueue, newTask);
-    // wait until the next time we yield.
-
-
-    if (!isHostCallbackScheduled && !isPerformingWork) {
-      isHostCallbackScheduled = true;
-      requestHostCallback(flushWork);
-    }
-  }
-
-  return newTask;
-}
-
-function unstable_pauseExecution() {
-}
-
-function unstable_continueExecution() {
-
-  if (!isHostCallbackScheduled && !isPerformingWork) {
-    isHostCallbackScheduled = true;
-    requestHostCallback(flushWork);
-  }
-}
-
-function unstable_getFirstCallbackNode() {
-  return peek(taskQueue);
-}
-
-function unstable_cancelCallback(task) {
-  // remove from the queue because you can't remove arbitrary nodes from an
-  // array based heap, only the first one.)
-
-
-  task.callback = null;
-}
-
-function unstable_getCurrentPriorityLevel() {
-  return currentPriorityLevel;
-}
-
-var isMessageLoopRunning = false;
-var scheduledHostCallback = null;
-var taskTimeoutID = -1; // Scheduler periodically yields in case there is other work on the main
-// thread, like user events. By default, it yields multiple times per frame.
-// It does not attempt to align with frame boundaries, since most tasks don't
-// need to be frame aligned; for those that do, use requestAnimationFrame.
-
-var frameInterval = frameYieldMs;
-var startTime = -1;
-
-function shouldYieldToHost() {
-  var timeElapsed = exports.unstable_now() - startTime;
-
-  if (timeElapsed < frameInterval) {
-    // The main thread has only been blocked for a really short amount of time;
-    // smaller than a single frame. Don't yield yet.
-    return false;
-  } // The main thread has been blocked for a non-negligible amount of time. We
-
-
-  return true;
-}
-
-function requestPaint() {
-
-}
-
-function forceFrameRate(fps) {
-  if (fps < 0 || fps > 125) {
-    // Using console['error'] to evade Babel and ESLint
-    console['error']('forceFrameRate takes a positive int between 0 and 125, ' + 'forcing frame rates higher than 125 fps is not supported');
-    return;
-  }
-
-  if (fps > 0) {
-    frameInterval = Math.floor(1000 / fps);
-  } else {
-    // reset the framerate
-    frameInterval = frameYieldMs;
-  }
-}
-
-var performWorkUntilDeadline = function () {
-  if (scheduledHostCallback !== null) {
-    var currentTime = exports.unstable_now(); // Keep track of the start time so we can measure how long the main thread
-    // has been blocked.
-
-    startTime = currentTime;
-    var hasTimeRemaining = true; // If a scheduler task throws, exit the current browser task so the
-    // error can be observed.
-    //
-    // Intentionally not using a try-catch, since that makes some debugging
-    // techniques harder. Instead, if `scheduledHostCallback` errors, then
-    // `hasMoreWork` will remain true, and we'll continue the work loop.
-
-    var hasMoreWork = true;
-
-    try {
-      hasMoreWork = scheduledHostCallback(hasTimeRemaining, currentTime);
-    } finally {
-      if (hasMoreWork) {
-        // If there's more work, schedule the next message event at the end
-        // of the preceding one.
-        schedulePerformWorkUntilDeadline();
-      } else {
-        isMessageLoopRunning = false;
-        scheduledHostCallback = null;
-      }
-    }
-  } else {
-    isMessageLoopRunning = false;
-  } // Yielding to the browser will give it a chance to paint, so we can
 };
 
-var schedulePerformWorkUntilDeadline;
-
-if (typeof localSetImmediate === 'function') {
-  // Node.js and old IE.
-  // There's a few reasons for why we prefer setImmediate.
-  //
-  // Unlike MessageChannel, it doesn't prevent a Node.js process from exiting.
-  // (Even though this is a DOM fork of the Scheduler, you could get here
-  // with a mix of Node.js 15+, which has a MessageChannel, and jsdom.)
-  // https://github.com/facebook/react/issues/20756
-  //
-  // But also, it runs earlier which is the semantic we want.
-  // If other browsers ever implement it, it's better to use it.
-  // Although both of these would be inferior to native scheduling.
-  schedulePerformWorkUntilDeadline = function () {
-    localSetImmediate(performWorkUntilDeadline);
-  };
-} else if (typeof MessageChannel !== 'undefined') {
-  // DOM and Worker environments.
-  // We prefer MessageChannel because of the 4ms setTimeout clamping.
-  var channel = new MessageChannel();
-  var port = channel.port2;
-  channel.port1.onmessage = performWorkUntilDeadline;
-
-  schedulePerformWorkUntilDeadline = function () {
-    port.postMessage(null);
-  };
-} else {
-  // We should only fallback here in non-browser environments.
-  schedulePerformWorkUntilDeadline = function () {
-    localSetTimeout(performWorkUntilDeadline, 0);
-  };
-}
-
-function requestHostCallback(callback) {
-  scheduledHostCallback = callback;
-
-  if (!isMessageLoopRunning) {
-    isMessageLoopRunning = true;
-    schedulePerformWorkUntilDeadline();
-  }
-}
-
-function requestHostTimeout(callback, ms) {
-  taskTimeoutID = localSetTimeout(function () {
-    callback(exports.unstable_now());
-  }, ms);
-}
-
-function cancelHostTimeout() {
-  localClearTimeout(taskTimeoutID);
-  taskTimeoutID = -1;
-}
-
-var unstable_requestPaint = requestPaint;
-var unstable_Profiling =  null;
-
-exports.unstable_IdlePriority = IdlePriority;
-exports.unstable_ImmediatePriority = ImmediatePriority;
-exports.unstable_LowPriority = LowPriority;
-exports.unstable_NormalPriority = NormalPriority;
-exports.unstable_Profiling = unstable_Profiling;
-exports.unstable_UserBlockingPriority = UserBlockingPriority;
-exports.unstable_cancelCallback = unstable_cancelCallback;
-exports.unstable_continueExecution = unstable_continueExecution;
-exports.unstable_forceFrameRate = forceFrameRate;
-exports.unstable_getCurrentPriorityLevel = unstable_getCurrentPriorityLevel;
-exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
-exports.unstable_next = unstable_next;
-exports.unstable_pauseExecution = unstable_pauseExecution;
-exports.unstable_requestPaint = unstable_requestPaint;
-exports.unstable_runWithPriority = unstable_runWithPriority;
-exports.unstable_scheduleCallback = unstable_scheduleCallback;
-exports.unstable_shouldYield = shouldYieldToHost;
-exports.unstable_wrapCallback = unstable_wrapCallback;
-          /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-if (
-  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
-  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop ===
-    'function'
-) {
-  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
-}
-        
-  })();
-}
-
-}).call(this)}).call(this,require('_process'),require("timers").setImmediate)
-},{"_process":9,"timers":23}],21:[function(require,module,exports){
-(function (setImmediate){(function (){
-/**
- * @license React
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-'use strict';function f(a,b){var c=a.length;a.push(b);a:for(;0<c;){var d=c-1>>>1,e=a[d];if(0<g(e,b))a[d]=b,a[c]=e,c=d;else break a}}function h(a){return 0===a.length?null:a[0]}function k(a){if(0===a.length)return null;var b=a[0],c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length,w=e>>>1;d<w;){var m=2*(d+1)-1,C=a[m],n=m+1,x=a[n];if(0>g(C,c))n<e&&0>g(x,C)?(a[d]=x,a[n]=c,d=n):(a[d]=C,a[m]=c,d=m);else if(n<e&&0>g(x,c))a[d]=x,a[n]=c,d=n;else break a}}return b}
-function g(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}if("object"===typeof performance&&"function"===typeof performance.now){var l=performance;exports.unstable_now=function(){return l.now()}}else{var p=Date,q=p.now();exports.unstable_now=function(){return p.now()-q}}var r=[],t=[],u=1,v=null,y=3,z=!1,A=!1,B=!1,D="function"===typeof setTimeout?setTimeout:null,E="function"===typeof clearTimeout?clearTimeout:null,F="undefined"!==typeof setImmediate?setImmediate:null;
-"undefined"!==typeof navigator&&void 0!==navigator.scheduling&&void 0!==navigator.scheduling.isInputPending&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function G(a){for(var b=h(t);null!==b;){if(null===b.callback)k(t);else if(b.startTime<=a)k(t),b.sortIndex=b.expirationTime,f(r,b);else break;b=h(t)}}function H(a){B=!1;G(a);if(!A)if(null!==h(r))A=!0,I(J);else{var b=h(t);null!==b&&K(H,b.startTime-a)}}
-function J(a,b){A=!1;B&&(B=!1,E(L),L=-1);z=!0;var c=y;try{G(b);for(v=h(r);null!==v&&(!(v.expirationTime>b)||a&&!M());){var d=v.callback;if("function"===typeof d){v.callback=null;y=v.priorityLevel;var e=d(v.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?v.callback=e:v===h(r)&&k(r);G(b)}else k(r);v=h(r)}if(null!==v)var w=!0;else{var m=h(t);null!==m&&K(H,m.startTime-b);w=!1}return w}finally{v=null,y=c,z=!1}}var N=!1,O=null,L=-1,P=5,Q=-1;
-function M(){return exports.unstable_now()-Q<P?!1:!0}function R(){if(null!==O){var a=exports.unstable_now();Q=a;var b=!0;try{b=O(!0,a)}finally{b?S():(N=!1,O=null)}}else N=!1}var S;if("function"===typeof F)S=function(){F(R)};else if("undefined"!==typeof MessageChannel){var T=new MessageChannel,U=T.port2;T.port1.onmessage=R;S=function(){U.postMessage(null)}}else S=function(){D(R,0)};function I(a){O=a;N||(N=!0,S())}function K(a,b){L=D(function(){a(exports.unstable_now())},b)}
-exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){A||z||(A=!0,I(J))};
-exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):P=0<a?Math.floor(1E3/a):5};exports.unstable_getCurrentPriorityLevel=function(){return y};exports.unstable_getFirstCallbackNode=function(){return h(r)};exports.unstable_next=function(a){switch(y){case 1:case 2:case 3:var b=3;break;default:b=y}var c=y;y=b;try{return a()}finally{y=c}};exports.unstable_pauseExecution=function(){};
-exports.unstable_requestPaint=function(){};exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=y;y=a;try{return b()}finally{y=c}};
-exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:u++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,f(t,a),null===h(r)&&a===h(t)&&(B?(E(L),L=-1):B=!0,K(H,c-d))):(a.sortIndex=e,f(r,a),A||z||(A=!0,I(J)));return a};
-exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
-
 }).call(this)}).call(this,require("timers").setImmediate)
-},{"timers":23}],22:[function(require,module,exports){
+},{"timers":26}],25:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/scheduler.production.min.js');
+  module.exports = require('./cjs/scheduler.production.js');
 } else {
   module.exports = require('./cjs/scheduler.development.js');
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":20,"./cjs/scheduler.production.min.js":21,"_process":9}],23:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":23,"./cjs/scheduler.production.js":24,"_process":9}],26:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -35671,10 +36397,10 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":9,"timers":23}],24:[function(require,module,exports){
+},{"process/browser.js":9,"timers":26}],27:[function(require,module,exports){
 (function (process){(function (){
 !function(e,r){"object"==typeof exports&&"undefined"!=typeof module?r(exports,require("react"),require("scheduler"),require("react-dom")):"function"==typeof define&&define.amd?define(["exports","react","scheduler","react-dom"],r):r((e||self).useContextSelector={},e.React,e.scheduler,e.ReactDOM)}(this,function(e,r,t,n){var u=Symbol(),o=Symbol(),c="undefined"==typeof window||/ServerSideRendering/.test(window.navigator&&window.navigator.userAgent)?r.useEffect:r.useLayoutEffect,i=t.unstable_runWithPriority?function(e){return t.unstable_runWithPriority(t.unstable_NormalPriority,e)}:function(e){return e()},s=function(e){return e};function f(e,t){var n=r.useContext(e)[u];if("object"==typeof process&&"production"!==process.env.NODE_ENV&&!n)throw new Error("useContextSelector requires special context");var o=n.v.current,i=n.n.current,s=n.l,f=t(o),a=r.useReducer(function(e,r){if(!r)return[o,f];if("p"in r)throw r.p;if(r.n===i)return Object.is(e[1],f)?e:[o,f];try{if("v"in r){if(Object.is(e[0],r.v))return e;var n=t(r.v);return Object.is(e[1],n)?e:[r.v,n]}}catch(e){}return[].concat(e)},[o,f]),d=a[0],l=a[1];return Object.is(d[1],f)||l(),c(function(){return s.add(l),function(){s.delete(l)}},[s]),d[1]}e.BridgeProvider=function(e){var t=e.value,n=e.children,u=e.context[o];if("object"==typeof process&&"production"!==process.env.NODE_ENV&&!u)throw new Error("BridgeProvider requires special context");return r.createElement(u,{value:t},n)},e.createContext=function(e){var t,s,f=r.createContext(((t={})[u]={v:{current:e},n:{current:-1},l:new Set,u:function(e){return e()}},t));return f[o]=f.Provider,f.Provider=(s=f.Provider,function(e){var t=e.value,o=e.children,f=r.useRef(t),a=r.useRef(0),d=r.useState(null),l=d[0],v=d[1];l&&(l(t),v(null));var p=r.useRef();if(!p.current){var h,x=new Set;p.current=((h={})[u]={v:f,n:a,l:x,u:function(e,r){n.unstable_batchedUpdates(function(){a.current+=1;var t={n:a.current};null!=r&&r.suspense&&(t.n*=-1,t.p=new Promise(function(e){v(function(){return function(r){t.v=r,delete t.p,e(r)}})})),x.forEach(function(e){return e(t)}),e()})}},h)}return c(function(){f.current=t,a.current+=1,i(function(){p.current[u].l.forEach(function(e){e({n:a.current,v:t})})})},[t]),r.createElement(s,{value:p.current},o)}),delete f.Consumer,f},e.useBridgeValue=function(e){var t=r.useContext(e);if("object"==typeof process&&"production"!==process.env.NODE_ENV&&!t[u])throw new Error("useBridgeValue requires special context");return t},e.useContext=function(e){return f(e,s)},e.useContextSelector=f,e.useContextUpdate=function(e){var t=r.useContext(e)[u];if("object"==typeof process&&"production"!==process.env.NODE_ENV&&!t)throw new Error("useContextUpdate requires special context");return t.u}});
 
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":9,"react":18,"react-dom":13,"scheduler":22}]},{},[4]);
+},{"_process":9,"react":21,"react-dom":13,"scheduler":25}]},{},[4]);
